@@ -49,10 +49,11 @@ console.log(foo(5));
 
 [link text](http://dev.nodeca.com)
 
-### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
-
-==Marked text==
 
 ## Images
 
 ![Minion](https://octodex.github.com/images/minion.png)
+
+<img src="/images/logo.png"
+     alt="Markdown Monster icon"
+     style="float: left; margin-right: 10px;" />
