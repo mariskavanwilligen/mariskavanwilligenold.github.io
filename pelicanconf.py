@@ -34,10 +34,18 @@ LINKS = (('Pelican', 'https://getpelican.com/'),
          ('Python.org', 'https://www.python.org/'),
          ('Jinja2', 'https://palletsprojects.com/p/jinja/'),
          ('Albert Heijn', 'https://ah.nl/'),)
+# Author
+AUTHOR_INTRO = u'Hello world! I’m Mariska van Willigen'
+AUTHOR_DESCRIPTION = u'Hello world! I’m Mariska van Willigen. I like code, cheese, dogs and Python.'
+AUTHOR_AVATAR = '/images/logo_min.png'
+#AUTHOR_WEB = 'http://mypersonalsite.com'
 
-# Social widget
-SOCIAL = (('My Linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b036126/'),
-          ('Join Albert Heijn', 'https://werk.ah.nl/'),)
+# Social
+SOCIAL = (
+    ('facebook', 'https://www.facebook.com/mariska.vanwilligen.5/'),
+    ('github', 'https://discord.gg/vfXBA2kS'),
+    ('linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b036126/'),
+)
 
 DEFAULT_PAGINATION = False
 DEFAULT_CATEGORY = 'somethingelse'
