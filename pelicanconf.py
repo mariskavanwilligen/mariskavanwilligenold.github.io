@@ -3,7 +3,7 @@
 
 AUTHOR = 'Mariska van Willigen'
 SITENAME = 'Mariska van Willigen'
-SITEURL = ''
+SITEURL = 'https://mariskavanwilligen.github.io/'
 
 LANDING_PAGE_TITLE = "Welcome to " + SITENAME
 
