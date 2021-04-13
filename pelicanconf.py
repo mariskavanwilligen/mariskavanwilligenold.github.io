@@ -41,7 +41,7 @@ SOCIAL = (('My Linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b0
 
 DEFAULT_PAGINATION = False
 DEFAULT_CATEGORY = 'somethingelse'
-NEST_HEADER_LOGO = '/images/logo.png'
+#NEST_HEADER_LOGO = '/images/logo.png'
 MENUITEMS = (('About me', '/aboutme.html'),
             ('Contact', '/contact.html'),
          )
