@@ -3,7 +3,7 @@
 
 AUTHOR = 'Mariska van Willigen'
 SITENAME = 'Mariska van Willigen'
-SITEURL = 'mariskavanwilligen.github.io'
+SITEURL = 'https://mariskavanwilligen.github.io/'
 
 LANDING_PAGE_TITLE = "Welcome to " + SITENAME
 
@@ -24,7 +24,7 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-LOAD_CONTENT_CACHE = False
+
 
 STATIC_PATHS = [
     'images',
