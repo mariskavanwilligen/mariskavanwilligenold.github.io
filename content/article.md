@@ -8,4 +8,4 @@ Authors: Mariska van Willigen
 Summary: Who am I?
 Illustration: sea.jpg
 
-This is the content of my super blog post.
+This is the content of my super blog post. My name is Marriska
