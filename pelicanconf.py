@@ -13,7 +13,7 @@ TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = 'nl'
 
-THEME = 'themes/MinimalXV'
+THEME = 'themes/MinimalXY'
 NEST_HEADER_IMAGES = 'sea.jpg'
 #DISPLAY_PAGES_ON_MENU = 'True'
 
