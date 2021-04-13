@@ -48,7 +48,7 @@ SOCIAL = (
 )
 
 DEFAULT_PAGINATION = False
-DEFAULT_CATEGORY = 'somethingelse'
+#DEFAULT_CATEGORY = 'somethingelse'
 #NEST_HEADER_LOGO = '/images/logo.png'
 # MENUITEMS = (('About meEE', '/aboutme.html'),
 #             ('Contact', '/contact.html'),

@@ -1,5 +1,5 @@
 Title: Introduction
-Date: 2010-12-03 10:20
+Date: 2021-04-12 10:20
 Modified: 2010-12-05 19:30
 Tags: pelican, publishing
 Slug: my-super-post
@@ -52,7 +52,3 @@ console.log(foo(5));
 ## Images
 
 ![Minion](https://octodex.github.com/images/minion.png)
-
-<img src="/images/logo.png"
-     alt="Markdown Monster icon"
-     style="float: left; margin-right: 10px;" />
