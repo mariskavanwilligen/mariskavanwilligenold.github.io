@@ -13,7 +13,7 @@ TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = 'nl'
 
-THEME = 'themes/nest'
+THEME = 'themes/hyde'
 NEST_HEADER_IMAGES = 'sea.jpg'
 #DISPLAY_PAGES_ON_MENU = 'True'
 
