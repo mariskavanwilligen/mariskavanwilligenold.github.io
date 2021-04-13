@@ -1,6 +1,6 @@
 Title: Contact
-Slug: contact-pages
-Illustration: sea.jpg
+Slug: contact-page
 save_as: contact.html
 
+NEW
 CONTACT PAGE
