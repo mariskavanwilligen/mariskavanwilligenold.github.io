@@ -15,7 +15,7 @@ DEFAULT_LANG = 'nl'
 
 THEME = 'themes/MinimalXY'
 NEST_HEADER_IMAGES = 'sea.jpg'
-#DISPLAY_PAGES_ON_MENU = 'True'
+DISPLAY_PAGES_ON_MENU = 'True'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
@@ -42,8 +42,8 @@ SOCIAL = (('My Linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b0
 DEFAULT_PAGINATION = False
 DEFAULT_CATEGORY = 'somethingelse'
 #NEST_HEADER_LOGO = '/images/logo.png'
-MENUITEMS = (('About meEE', '/aboutme.html'),
-            ('Contact', '/contact.html'),
-         )
+# MENUITEMS = (('About meEE', '/aboutme.html'),
+#             ('Contact', '/contact.html'),
+#          )
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
