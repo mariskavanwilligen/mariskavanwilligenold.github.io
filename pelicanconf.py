@@ -42,8 +42,8 @@ SOCIAL = (('My Linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b0
 DEFAULT_PAGINATION = False
 DEFAULT_CATEGORY = 'somethingelse'
 #NEST_HEADER_LOGO = '/images/logo.png'
-MENUITEMS = (('About meEE', '/aboutme.html'),
-            ('Contact', '/contact.html'),
-         )
+# MENUITEMS = (('About meEE', '/aboutme.html'),
+#             ('Contact', '/contact.html'),
+#          )
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
