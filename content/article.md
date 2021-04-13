@@ -23,3 +23,36 @@ Indented code
     line 1 of code
     line 2 of code
     line 3 of code
+
+
+Syntax highlighting
+
+``` js
+var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+```
+
+## Tables
+
+| Option | Description |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
+
+
+## Links
+
+[link text](http://dev.nodeca.com)
+
+### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
+
+==Marked text==
+
+## Images
+
+![Minion](https://octodex.github.com/images/minion.png)
