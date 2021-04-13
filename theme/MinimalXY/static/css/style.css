@@ -51,12 +51,12 @@ abbr[title] {
 
 ::selection {
   color: white;
-  background: #81C784;
+  background: PaleVioletRed;
 }
 
 ::-moz-selection {
   color: white;
-  background: #81C784;
+  background: PaleVioletRed;
 }
 
 
@@ -262,7 +262,7 @@ ul.social li a:hover {
 }
 
 #content p.content-highlight {
-  color: #4CAF50;
+  color: PaleVioletRed;
   font-size: 18pt;
   text-align: right;
   font-style: italic;
