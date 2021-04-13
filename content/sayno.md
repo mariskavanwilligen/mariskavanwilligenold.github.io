@@ -22,4 +22,4 @@ If not said right, it can often ruin friendships, relationships and a lot more. 
 4. Unfortunately, now is not a good time.
 5. Sorry, I'm booked into something else right now
 6. Damn, not able to fit this one in!
-7. I have another commitment (can we teach men this too sentence?)
+7. I have another commitment (can we teach men this sentence?)
