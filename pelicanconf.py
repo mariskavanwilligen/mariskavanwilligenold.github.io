@@ -43,7 +43,7 @@ AUTHOR_AVATAR = '/images/logo_min.png'
 # Social
 SOCIAL = (
     ('facebook', 'https://www.facebook.com/mariska.vanwilligen.5/'),
-    ('github', 'https://discord.gg/vfXBA2kS'),
+    ('github', 'https://github.com/mariskavanwilligen'),
     ('linkedin', 'https://www.linkedin.com/in/mariska-van-willigen-09b036126/'),
 )
 
