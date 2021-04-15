@@ -1,7 +1,7 @@
 Title: Introduction
 Date: 2021-04-12 10:20
 Modified: 2010-12-05 19:30
-Tags: pelican, publishing
+Tags: First Post, Introduction, Publishing
 Slug: my-super-post
 Authors: Mariska van Willigen
 Summary: Who am I?
