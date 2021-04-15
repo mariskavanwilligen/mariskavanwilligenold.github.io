@@ -10,44 +10,16 @@ Illustration: sea.jpg
 ## Introduction
 Hi EVERYONE, I wil introduce myself here, blaa blaa blaa My name is Mariska and I might update this blog or maybe never and just make it for fun. 
 
->> Who knows?
+> Who knows?
 
-## Code
-
-Inline `code`
-
-Indented code
-
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
-
-
-Syntax highlighting
 
 ``` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
+Mariskas_objects = a + b
+if a == 'small cute dog':
+  print('Very happy Mariska :)')
+if a == 'small cute dog' & b == 'Cheesefondue':
+  print('OMGGGGG YESSSSSS :D')
 ```
-
-## Tables
-
-| Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-
-
-## Links
-
-[link text](http://dev.nodeca.com)
-
 
 ## Images
 
