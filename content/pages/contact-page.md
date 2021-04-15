@@ -1,5 +1,12 @@
 Title: Contact
 Slug: contact-page
 
-NEW
-CONTACT PAGE
+##### **Don't hesitate, get in touch with me!**
+
+<form>      
+  <input name="name" type="text" class="feedback-input" placeholder="Name" />   
+  <input name="email" type="text" class="feedback-input" placeholder="Email" />
+  <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
+  <input type="submit" value="SUBMIT"/>
+</form>
+
