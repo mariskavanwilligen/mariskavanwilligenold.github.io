@@ -135,7 +135,7 @@ ul.social li a:hover {
   justify-content: center;
   align-items: center;
   background-color: black;
-  color: PaleVioletRed;
+  color: purple;
   font-size: 15pt;
   font-weight: bold;
 }
@@ -148,6 +148,7 @@ ul.social li a:hover {
 #header-menu {
   font-size: 14pt;
   text-align: right;
+  font-weight: bold;
 }
 
 #header-menu ul {
@@ -172,7 +173,8 @@ ul.social li a:hover {
   align-items: center;
   margin: 0 auto;
   max-width: 1000px;
-  color: PaleVioletRed;
+  color: black;
+  background-color: lavenderblush;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -214,7 +216,7 @@ ul.social li a:hover {
 }
 
 #content a {
-  color: PaleVioletRed;
+  color: purple;
 }
 
 #content a:hover {
