@@ -44,15 +44,6 @@ input[type=submit]:hover {
 
 <div class="container">
 <form name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSccbwkH9WvgAKX-wmjd7P-sSc-wGf85u6HeA5hSpG8oFlAjbA/formResponse?" target="hidden_iframe" onsubmit="submitted=true;">
-  First name:<br>
-  <input type="text" name="entry.810989529" id="entry.810989529"><br>
-  Last name:<br>
-  <input type="text" name="entry.463380756" id="entry.463380756">
-  <input type="submit" value="Submit">
-</form>
-
-<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
-  <form action="http://formspree.io/mariska.w@live.nl">
     <label for="fname">First Name</label>
     <input type="text" id="fname" name="firstname" placeholder="Your name..">
     <label for="lname">Last Name</label>
