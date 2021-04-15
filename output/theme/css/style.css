@@ -178,7 +178,7 @@ ul.social li a:hover {
 #intro-description {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
-  color: pink;
+  color: black;
   font-size: 11pt;
 }
 
@@ -196,7 +196,7 @@ ul.social li a:hover {
 }
 
 #footer-copyright {
-  background-color: #0F0F0F;
+  background-color:#0F0F0F;
 }
 
 #listing article {
@@ -278,7 +278,6 @@ ul.social li a:hover {
 #author-block {
   max-width: 100%;
   display: flex;
-  background-color: pink;
   flex-wrap: wrap;
 }
 
