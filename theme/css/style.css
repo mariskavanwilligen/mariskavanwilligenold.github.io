@@ -172,6 +172,7 @@ ul.social li a:hover {
   align-items: center;
   margin: 0 auto;
   max-width: 1000px;
+  color: PaleVioletRed;
   justify-content: center;
   flex-wrap: wrap;
 }
