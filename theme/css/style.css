@@ -135,7 +135,7 @@ ul.social li a:hover {
   justify-content: center;
   align-items: center;
   background-color: black;
-  color: purple;
+  color: lavenderblush;
   font-size: 15pt;
   font-weight: bold;
 }
@@ -174,7 +174,6 @@ ul.social li a:hover {
   margin: 0 auto;
   max-width: 1000px;
   color: black;
-  background-color: lavenderblush;
   justify-content: center;
   flex-wrap: wrap;
 }
