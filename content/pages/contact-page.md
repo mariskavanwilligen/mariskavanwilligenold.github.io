@@ -54,6 +54,7 @@ input[type=submit]:hover {
     <label for="email">Email address</label><br><br>
     <input type="submit" value="Send">
   </form>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
 </div>
 
 </body>
