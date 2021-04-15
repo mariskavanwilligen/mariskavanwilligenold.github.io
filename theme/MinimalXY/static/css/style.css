@@ -172,7 +172,6 @@ ul.social li a:hover {
   align-items: center;
   margin: 0 auto;
   max-width: 1000px;
-  color: pink;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -180,6 +179,7 @@ ul.social li a:hover {
 #intro-description {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
+  color: pink;
   font-size: 11pt;
 }
 
