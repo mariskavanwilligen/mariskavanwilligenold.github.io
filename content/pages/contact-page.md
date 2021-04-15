@@ -51,7 +51,7 @@ input[type=submit]:hover {
     <label for="subject">Subject</label>
     <textarea id="entry.949117067" name="entry.949117067" placeholder="Write something.." style="height:200px"></textarea>
     <input type="email" name="entry.314564282" id="entry.314564282" placeholder="Your Email address">
-    <label for="email">Email address</label>
+    <label for="email">Email address</label><br><br>
     <input type="submit" value="Send">
   </form>
 </div>
