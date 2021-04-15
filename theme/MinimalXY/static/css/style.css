@@ -279,6 +279,7 @@ ul.social li a:hover {
 #author-block {
   max-width: 100%;
   display: flex;
+  background-color: pink;
   flex-wrap: wrap;
 }
 
@@ -287,6 +288,7 @@ ul.social li a:hover {
   margin-left: 40px;
   margin-right: 40px;
   margin-top: 15px;
+  color: white;
   margin-bottom: 10px;
 }
 
