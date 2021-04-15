@@ -45,12 +45,12 @@ input[type=submit]:hover {
 <div class="container">
 <form name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSccbwkH9WvgAKX-wmjd7P-sSc-wGf85u6HeA5hSpG8oFlAjbA/formResponse?" target="hidden_iframe" onsubmit="submitted=true;">
     <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+    <input type="text" id="entry.155443643" name="ntry.155443643" placeholder="Your name..">
     <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    <input type="text" id="entry.1390542618" name="entry.1390542618" placeholder="Your last name..">
     <label for="subject">Subject</label>
-    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-    <input type="email" name="_replyto" placeholder="Your Email address">
+    <textarea id="entry.949117067" name="entry.949117067" placeholder="Write something.." style="height:200px"></textarea>
+    <input type="email" name="entry.314564282" id="entry.314564282" placeholder="Your Email address">
     <label for="email">Email address</label>
     <input type="submit" value="Send">
   </form>
