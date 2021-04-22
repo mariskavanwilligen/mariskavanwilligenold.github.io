@@ -1,110 +1,66 @@
-Title: MLflow Tracking Introduction
+Title: Contact
+Slug: contact-page
 
-Date: 2021-04-22 10:20
+##### **Don't hesitate, get in touch with me!**
 
-Tags: 
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
 
-Slug: mlflow
+<h3>Contact Form</h3>
 
-Authors: Mariska van Willigen
+<div class="container">
+<form name="gform" id="gform" enctype="text/plain" action="https://docs.google.com/forms/d/e/1FAIpQLSccbwkH9WvgAKX-wmjd7P-sSc-wGf85u6HeA5hSpG8oFlAjbA/formResponse?" target="hidden_iframe" onsubmit="submitted=true;">
+    <label for="fname">First Name</label>
+    <input type="text" id="entry.155443643" name="entry.155443643" placeholder="Your name..">
+    <label for="lname">Last Name</label>
+    <input type="text" id="entry.1390542618" name="entry.1390542618" placeholder="Your last name..">
+    <label for="subject">Subject</label>
+    <textarea id="entry.949117067" name="entry.949117067" placeholder="Write something.." style="height:200px"></textarea>
+    <label for="email">Email address</label></br>
+    <input type="email" name="entry.314564282" id="entry.314564282" placeholder="Your Email address">
+    </br>
+    </br>
+    <input type="submit" value="Send">
+  </form>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted) {}"></iframe>
+</div>
 
-Summary: MLflow
-
-
-
-## What is MLflow & MLflow tracking?
-
-[MLFlow](https://www.mlflow.org/) is the open-source solution for both the data scientist and the dev-ops engineer to track and register your models. You can divide MLFlow in MLFlow tracking part and a MLFlow modeling and model register part. This post will focuss on the MLFlow Tracking part and how it can be used. MLFlow tracking allows you to organize your data science artifacts into experiments and runs within your experiment.
-
-With MLflow you can keep track of all kind of information, for example your parameters used in your model. Each run a new line/row will created in your experiment. You can store anything you want in a given run, and it does not need to match exactly to the last run.
-
-The following options you can use to record (log) information to MLFlow:
-
-> **log_param**: Allows you to log any model/pipeline parameters you’d like. Think train/test split, hyperparameters, stages of a transformation pipeline, a description of a specific source dataset.
->
-> **log_params**: MLManager specific function that takes a list of parameters to log and handles them all automatically
->
-> **log_metric**: Allows you to log any model metrics. Think train time, accuracy, precision, AUC etc.
->
-> **log_metrics**: MLManager specific function that takes a list of metrics and handles them all automatically
->
-> **log_artifact**: Allows you to log objects to a specific run. Think charts, serialized models, images etc.
->
-> **log_artifacts**: MLManager specific function that takes a list of artifacts and handles them all
->
-> **log_feature_transformation**: MLManager specific function that takes an **untrained** Spark Pipeline and logs all of the transformation steps of every feature in your dataset
->
-> **log_pipeline_stages**: MLManager specific function that takes a Spark Pipeline (fit or unfit) and logs all of the stages in a readable format
->
-> **log_model_params**: MLManager specific function that takes a fitted Spark model or Pipeline model and logs all of the parameters and hyperparameters
->
-> **log_evaluator_metrics**: MLManager specific function that takes a Splice Evaluator and logs all of its metrics
->
-> **log_spark_model**: MLManager specific function that takes a trained Spark model and logs it for deployment. This was created because, with Splice Machine’s implementation, the model is stored directly in the Splice Machine database instead of S3 or in external storage.
-
-
-
-## Why should you use it?
-
-
-
-## How to use it?
-
-
-
-## Small example
-
-autologging feature
-
-- it logs the model
-
-- logs some metrics
-
-- Initialize handler instance
-
-'models' left down in dateabricks
-
-'experiments' top right in notebook
-
-
-
-
-
-# MLFlow Model
-
-## Save results
-
-1 experiment wher you can save all the runs. best one -> centralized registry workspace
-
-promote to test -> 
-
-crw keeps track of all the models (best hyperparameters)
-
-
-
-You then have to train, save and register only once, and then the model can be tested and be deployed in different workspaces (test, production)
-
-## Save/register a model with MLFlow
-
-## Use/read a model from MLFlow
-
-
-
-## REST API
-
-serving: read it in to pandas df, read it out (with cluster create permission) package in dockercontainer on new cluster, fully provised needed by the model. Allows to quicly deploy the model to get approach for REST API (20 queries per second). Azuer ML / AKS still necessarry for prosuction ready API.
-
-Don't forget to stop the cluster! It will keep on running.
-
-
-
-## Webhooks
-
-webhook for a job, or morre generic webhooks
-
-mlflow_webhooks
-
-again don't leave the cluster up and running
+</body>
+</html>
 
 <script src="assets/js/jquery.min.js"></script>
 <script type="text/javascript">var submitted=false;</script>
