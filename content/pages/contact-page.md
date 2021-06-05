@@ -3,6 +3,8 @@ Slug: contact-page
 
 ##### **Don't hesitate, get in touch with me!**
 
+![](/images/hithere.png)
+
 <!DOCTYPE html>
 <html>
 <head>
