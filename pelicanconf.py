@@ -39,7 +39,7 @@ LINKS = (('Pelican', 'https://getpelican.com/'),
          ('Albert Heijn', 'https://ah.nl/'),)
 # Author
 AUTHOR_INTRO = u'Hello world! I’m Mariska van Willigen'
-AUTHOR_DESCRIPTION = u'Hello world! I’m Mariska van Willigen. I like code, cheese, dogs and Python.'
+AUTHOR_DESCRIPTION = u'Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!'
 AUTHOR_AVATAR = '/images/logo_min.png'
 #AUTHOR_WEB = 'http://mypersonalsite.com'
 
