@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Stacked Uni- and Bivariate Nearest Neighbors (SUBINN) &ndash; Mariska van Willigen</title>
+    <title>Stacked Uni- and Bivariate Nearest Neighbors (SUBiNN) &ndash; Mariska van Willigen</title>
 
     <!-- Meta -->
     <meta name="description" content="Mariska van Willigen &ndash; ">
@@ -13,17 +13,17 @@
     <!-- Social -->
     <meta property="article:author" content="Mariska van Willigen" />
     <meta property="article:section" content="Posts" />
-    <meta property="article:published_time" content="2021-06-05" />
+    <meta property="article:published_time" content="2021-05-25" />
 
     <meta property="og:type" content="article"/>
-    <meta property="og:title" content="Stacked Uni- and Bivariate Nearest Neighbors (SUBINN)"/>
-    <meta property="og:description" content="A Simulation Study to Investigate the Feature Selection Performance of a Stacked Uni- and Bivariate Nearest Neighbors Classifier"/>
+    <meta property="og:title" content="Stacked Uni- and Bivariate Nearest Neighbors (SUBiNN)"/>
+    <meta property="og:description" content="SUBiNN is a Stacked Uni- and Bivariate Nearest Neighbors classifi er with kNN"/>
     <meta property="og:site_name" content="Mariska van Willigen" />
     <meta property="og:url" content="https://mariskavanwilligen.github.io/subinn-model.html"/>
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Stacked Uni- and Bivariate Nearest Neighbors (SUBINN)">
-    <meta name="twitter:description" content="A Simulation Study to Investigate the Feature Selection Performance of a Stacked Uni- and Bivariate Nearest Neighbors Classifier">
+    <meta name="twitter:title" content="Stacked Uni- and Bivariate Nearest Neighbors (SUBiNN)">
+    <meta name="twitter:description" content="SUBiNN is a Stacked Uni- and Bivariate Nearest Neighbors classifi er with kNN">
     <meta name="twitter:url" content="https://mariskavanwilligen.github.io/subinn-model.html">
 
     <!-- Feed -->
@@ -66,10 +66,10 @@
 
     <article>
       <header class="w3-container col-main">
-        <h1>Stacked Uni- and Bivariate Nearest Neighbors (SUBINN)</h1>
+        <h1>Stacked Uni- and Bivariate Nearest Neighbors (SUBiNN)</h1>
         <div class="post-info">
           <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
-            <span><time datetime="2021-06-05T11:14:00+02:00">za 05 juni 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+            <span><time datetime="2021-05-25T13:44:00+02:00">di 25 mei 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
           </div>
           <div>
             <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
@@ -77,6 +77,9 @@
             </span>
             <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
               <a href="https://mariskavanwilligen.github.io/tag/knn.html" title="All articles with Knn tag">#KNN</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/stacking.html" title="All articles with Stacking tag">#Stacking</a>
             </span>
             <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
               <a href="https://mariskavanwilligen.github.io/tag/classification.html" title="All articles with Classification tag">#Classification</a>
@@ -90,31 +93,14 @@
 
       <div class="col-main w3-container">
         <section id="content">
-          <h2>Summary</h2>
+          <p>classifiers as base-learners and a Lasso feature selection as meta-learner</p>
+<h2>SUBiNN</h2>
 <p>SUBiNN is a Stacked Uni- and Bivariate Nearest Neighbors classifier with kNN
-classifiers as base-learners and a Lasso feature selection as meta-learner. The
-aim of this present research is to estimate the power, type I error and the false
-discovery rate of the SUBiNN model to find interactions and main effects in
-the data. This simulation study makes use of a full factorial 3-by-3-by-2 design
-where systematically varied sample sizes and effect sizes are used in the data
-generating process. Additionally, varied number of neighbors k are used in the
-kNN classifiers. For each of the 100 replications, SUBiNN is fitted to a data set
-with 10 uniformly distributed features with one main effect and two interaction
-effects. The power, type I error and false discovery rate will be estimated to
-measure the feature selection performance in every condition. The stability of
-the results is examined in a follow-up study with one data set.
-The results of this simulation study show that a bigger effect size and sample
-size leads to an increased ability to identify the interaction and main effects.
-Furthermore, the different values of neighbors did not have a significant impact on the power. Although, the number of neighbors did have an impact
-on the type I error, a higher number of neighbors will result in a lower type
-I error. In all the conditions, the false discovery rates are quite high, mean-
-ing that of all the selected base-learners, there are still a few uninformative
-base-learners selected. From the follow-up study it can be concluded that 10-
-fold cross-validation caused unstable results when no repeated cross-validation
-is performed. Based on this simulation study and the follow-up study, it is
-strongly recommended to have a sample size of at least 500 and the number
-of neighbors set to 10 or the square root of N with repeated cross-validation to identify main
-effects and interactions with a SUBiNN model</p>
+classifiers as base-learners and a Lasso feature selection as meta-learner. </p>
+<p><img alt="" src="/images/Thesis/Thesis1.png"></p>
+<h2>Base-learner layer</h2>
+<h2>Meta-learner layer</h2>
+<p><img alt="" src="/images/Thesis/Thesis3.png"></p>
         </section>
 
         <br><br><br>
@@ -136,10 +122,10 @@ effects and interactions with a SUBiNN model</p>
 
           <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
           <div id="share" class="share">
-            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/subinn-model.html&amp;t=Mariska%20van%20Willigen%3A%20Stacked%20Uni-%20and%20Bivariate%20Nearest%20Neighbors%20%28SUBINN%29" target="_blank" class="w3-btn w3-indigo">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/subinn-model.html&amp;t=Mariska%20van%20Willigen%3A%20Stacked%20Uni-%20and%20Bivariate%20Nearest%20Neighbors%20%28SUBiNN%29" target="_blank" class="w3-btn w3-indigo">
               <i class="fa fa-facebook"></i> <span>Facebook</span>
             </a>
-            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/subinn-model.html&amp;text=Mariska%20van%20Willigen%3A%20Stacked%20Uni-%20and%20Bivariate%20Nearest%20Neighbors%20%28SUBINN%29" target="_blank" class="w3-btn w3-blue">
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/subinn-model.html&amp;text=Mariska%20van%20Willigen%3A%20Stacked%20Uni-%20and%20Bivariate%20Nearest%20Neighbors%20%28SUBiNN%29" target="_blank" class="w3-btn w3-blue">
               <i class="fa fa-twitter"></i> <span>Twitter</span>
             </a>
             <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/subinn-model.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
