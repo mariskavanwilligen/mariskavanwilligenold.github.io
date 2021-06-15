@@ -106,12 +106,12 @@
 <h2>Aim: predict prices for houses in Boston</h2>
 <p>Features:</p>
 <blockquote>
-<p><strong>CRIM</strong> - per capita crime rate by town
-<strong>ZN</strong> - proportion of residential land zoned for lots over 25,000 sq.ft.
-<strong>INDUS</strong> - proportion of non-retail business acres per town
-<strong>RM</strong> - average number of rooms per dwelling
-<strong>AGE</strong> - proportion of owner-occupied units built prior to 1940
-<strong>DIS</strong> - weighted distances to five Boston employment centres</p>
+<p><strong>CRIM</strong> - per capita crime rate by town</p>
+<p><strong>ZN</strong> - proportion of residential land zoned for lots over 25,000 sq.ft.</p>
+<p><strong>INDUS</strong> - proportion of non-retail business acres per town</p>
+<p><strong>RM</strong> - average number of rooms per dwelling</p>
+<p><strong>AGE</strong> - proportion of owner-occupied units built prior to 1940</p>
+<p><strong>DIS</strong> - weighted distances to five Boston employment centres</p>
 </blockquote>
 <h2>Loading the dataset</h2>
 <div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
@@ -150,10 +150,11 @@
 <h1>Pipeline:</h1>
 <p>Build ML workflows as a chain of Transformers and Estimators.</p>
 <blockquote>
-<p><strong>DataFrame</strong>: stores data (e.g., input, features, labels, predictions).
-<strong>Transformer</strong>: transforms one DataFrame into another DataFrame.
-<strong>Estimator</strong>: fits on a DataFrame and produces a Transformer.
-<strong>Parameter</strong>: Common API for specifying parameters.</p>
+<p><strong>DataFrame</strong>: stores data (e.g., input, features, labels, predictions).</p>
+<p><strong>Transformer</strong>: transforms one DataFrame into another DataFrame.</p>
+<p><strong>Estimator</strong>: fits on a DataFrame and produces a Transformer.</p>
+<p><strong>Parameter</strong>: Common API for specifying parameters.
+</p>
 </blockquote>
 <p>It is necessary to call your columns in a list 'feature_cols' which will be transformed with a VectorAssembler into a features_vector.
 The outcome variable y should always have the columnname 'label'.</p>
@@ -171,7 +172,7 @@ The outcome variable y should always have the columnname 'label'.</p>
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
-<h1>With Grid search and crossvalidation</h1>
+<h1>Hyperparameter tuning ith Grid search and crossvalidation</h1>
 <p>A gridsearch can be performed to find the optimal number of trees.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
