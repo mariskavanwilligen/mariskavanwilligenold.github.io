@@ -117,16 +117,16 @@ one main effecg X7 are defined. The data generating process is given by:</p>
 the probabilities, observations from a binominal distribution are sampled. The
 main effect of X7 is defined as a step function. The data points of X7 with a
 value between -1 and -0.5 or between 0 and 0.5 are returning a 1 by function S.
-All the other values of X7 are returning a -1.
-The two interaction effects can be described as Four Blocks and Gaussian
+All the other values of X7 are returning a -1.</p>
+<p>The two interaction effects can be described as Four Blocks and Gaussian
 ordination. These two interactions are nonlinear and described by Yuan et al.
 (2019). Additionally, the Gaussian ordination is also used in a simulation study
 by Gul et al. (2016). Both interactions are pure interactions in the sense that
 no linear regression model will be able to classify a data point correctly if there
 is one pure interaction effect and an outcome variable. The interactions are
 expected to be informative and not the linear main effects of the variables used
-in the interactions.
-The interactions before sampling from a binomial distribution are visualized
+in the interactions.</p>
+<p>The interactions before sampling from a binomial distribution are visualized
 in Figure below. The left plot shows the <code>Four Blocks' interaction effect between X2
 and X3 and the right plots shows the</code>Gaussian ordination' interaction effect
 between X5 and X6. The two different colors represent the two different classes
@@ -150,13 +150,14 @@ the SUBiNN model occasionally tries to capture the information in bivariate
 pairs instead of univariate base-learners.</p>
 <p><img alt="" src="/images/Thesis/Thesis14.png">  </p>
 <p>From the heatmaps and the boxplots, it can be observed that a few uninformative base-learners are often selected by the model. A (N x P) predictor matrix
-X has P features and therefore R = (P + P(P 􀀀 1)=2) different base-learners
+X has P features and therefore R = (P + P(P * 1)=2) different base-learners
 with every possible uni- and bivariate combination of the features. The uninformative base-learners that were not filtered out often consist of two informative
 features or a combination of one informative feature and one uninformative
 feature. When looking on feature level, the model is able to filter out all the
 uninformative features. In the heatmaps (Figure 3d - 3i) a clear pattern is visible and features X2, X3, X5, X6 and X7 are correctly considered as important
-features. So to conclude, the model finds it difficult to filter out all the uninformative base-learners, but not to filter out all the uninformative features. To
-filter out more uninformative base-learners, it might be useful to take a look at
+features. </p>
+<p>So to conclude, the model finds it difficult to filter out all the uninformative base-learners, but not to filter out all the uninformative features. 
+To filter out more uninformative base-learners, it might be useful to take a look at
 the median or mode of all the coeficients given by Lasso after repeated 10-fold
 cross validation. In the end, the number of positive median or mode coecients
 can be counted. This will filter out more uninformative base-learners compared
@@ -166,13 +167,11 @@ and ones to do a count.</p>
 <h2>Conclusion</h2>
 <p>The results of this simulation study show that a bigger effect size and sample
 size leads to an increased ability to identify the interaction and main effects.</p>
-<blockquote>
 <p>Furthermore, the different values of neighbors did not have a significant impact on the power. Although, the number of neighbors did have an impact
 on the type I error, a higher number of neighbors will result in a lower type
 I error. In all the conditions, the false discovery rates are quite high, mean-
 ing that of all the selected base-learners, there are still a few uninformative
 base-learners selected.  </p>
-</blockquote>
 <p>Based on this simulation study, it is
 strongly recommended to have a sample size of at least 500 and the number
 of neighbors set to 10 or the square root of N with repeated cross-validation to identify main
