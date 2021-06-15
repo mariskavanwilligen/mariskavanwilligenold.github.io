@@ -146,7 +146,6 @@ The outcome column <strong>medv</strong> is renamend as <strong>label</strong> t
 
 <p><img alt="" src="/images/mlspark/counts.png"></p>
 <h1>Fitting a simpel Random forest model without grid search and cross validation</h1>
-<h2>Pipeline:</h2>
 <p>Build ML workflows as a chain of Transformers and Estimators.</p>
 <blockquote>
 <p><strong>DataFrame</strong>: Boston data (e.g., input, features, labels, predictions).</p>
@@ -192,7 +191,7 @@ After the pipeline has been set up and the model has been fitted, the prediction
 <span class="p">)</span>
 </code></pre></div>
 
-<p>The cv_model now contains the best model based on the MSE. With this bestmodel again predictions can be made and evaluated to get the <strong>MSE</strong> and the <strong>R2</strong>.</p>
+<p>The cv_model now contains the best model based on the <strong>MSE</strong>. With this bestmodel again predictions can be made and evaluated to get the <strong>MSE</strong> and the <strong>R2</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">cv_model</span> <span class="o">=</span> <span class="nx">cv</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">)</span>
 
 <span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">cv_model</span><span class="p">.</span><span class="nx">bestModel</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
@@ -204,7 +203,7 @@ After the pipeline has been set up and the model has been fitted, the prediction
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/withgrid.png"></p>
-<p>For now, this blogpost showed what I learned about SparkML and how to create a simple model with a pipeline, grid search and crossvalidation with SparkML instead of Sklearn. Ofcourse, the prediction accuracy and the MSE &amp; R2 can be improved by implementing more advanced model techniques. It could also be very beneficial to do more preprocessing. </p>
+<p>For now, this blogpost showed what I learned about SparkML and how to create a simple model with a pipeline, grid search and crossvalidation with SparkML instead of Sklearn. Ofcourse, the prediction accuracy and the <strong>MSE</strong> &amp; <strong>R2</strong> can be improved by implementing more advanced model techniques. It could also be very beneficial to do more preprocessing. </p>
         </section>
 
         <br><br><br>
