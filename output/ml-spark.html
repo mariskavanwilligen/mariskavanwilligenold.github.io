@@ -104,7 +104,7 @@
 </code></pre></div>
 
 <h2>Using Spark Machine Learning to predict prices for houses in Boston</h2>
-<p>The famous and well known boston housing dataset is used for playing around with Spark ML:
+<p>The very famous and well known boston housing dataset is used for playing around with Spark ML:
 The dataset consists of the following features:</p>
 <blockquote>
 <p><strong>CRIM</strong> - per capita crime rate by town</p>
@@ -113,8 +113,18 @@ The dataset consists of the following features:</p>
 <p><strong>RM</strong> - average number of rooms per dwelling</p>
 <p><strong>AGE</strong> - proportion of owner-occupied units built prior to 1940</p>
 <p><strong>DIS</strong> - weighted distances to five Boston employment centres</p>
+<p><strong>CHAS</strong> - Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p>
+<p><strong>NOX</strong> - nitric oxides concentration (parts per 10 million)</p>
+<p><strong>RAD</strong> - index of accessibility to radial highways</p>
+<p><strong>TAX</strong> - full-value property-tax rate per $10,000</p>
+<p><strong>PTRATIO</strong> - pupil-teacher ratio by town</p>
+<p><strong>B</strong> - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p>
+<p><strong>LSTAT</strong> - % lower status of the population</p>
+<p><strong>MEDV</strong> - Median value of owner-occupied homes in $1000's</p>
 </blockquote>
 <h2>Loading the dataset</h2>
+<p>First the dataset is going to be loaded in. <strong>header=True</strong> is used, so the colnames are already there. Furthermore, <strong>inferSchema=True</strong> will let Spark decide on each coltype. It is also possible to specify this manually by giving a schema. The extra index column and rows with missing values are being dropped.
+The outcome column <strong>medv</strong> is renamend as <strong>label</strong> this is important to use the different SparkML functions. Life is going to be more easier if the outcome column is called <strong>label</strong> and the other features are the <strong>feature_cols</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
 
 <span class="nx">boston</span> <span class="o">=</span> <span class="p">(</span><span class="nx">boston</span><span class="p">.</span><span class="nx">dropna</span><span class="p">()</span>
@@ -140,6 +150,7 @@ The dataset consists of the following features:</p>
 
 <p><img alt="" src="/images/mlspark/display.png"></p>
 <h2>Split in trainset and testset</h2>
+<p>Next step is to split the dataset in a train and test set wtih ratio 80/20, the random seed is set to archieve the same split and therefore same result each time the code will run.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Train count:&quot;</span><span class="p">,</span> <span class="nx">train_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
@@ -151,14 +162,13 @@ The dataset consists of the following features:</p>
 <h2>Pipeline:</h2>
 <p>Build ML workflows as a chain of Transformers and Estimators.</p>
 <blockquote>
-<p><strong>DataFrame</strong>: stores data (e.g., input, features, labels, predictions).</p>
-<p><strong>Transformer</strong>: transforms one DataFrame into another DataFrame.</p>
-<p><strong>Estimator</strong>: fits on a DataFrame and produces a Transformer.</p>
+<p><strong>DataFrame</strong>: Boston data (e.g., input, features, labels, predictions).</p>
+<p><strong>Transformer</strong>: Transforms one DataFrame into another DataFrame.</p>
+<p><strong>Estimator</strong>: Fits on a DataFrame and produces a Transformer.</p>
 <p><strong>Parameter</strong>: Common API for specifying parameters.</p>
 </blockquote>
-<p>It is necessary to call your columns in a list 'feature_cols' which will be transformed with a VectorAssembler into a features_vector.
-The outcome variable y should always have the columnname 'label'.</p>
-<p>After the pipeline has been set up and the model has been fitted, the predictions can be derived with .transform()</p>
+<p>The <strong>VectorAssembler</strong> is a transformer that combines a given list of columns into a single vector column and <strong>MinMaxScaler</strong> transforms a dataset of Vector rows, rescaling each feature to a specific range (often [0, 1]). Then, a random forest regressor is used to model the data.
+After the pipeline has been set up and the model has been fitted, the predictions can be derived with .transform() and the <strong>MSE</strong> and <strong>R2</strong> can be calculated with the predictions and the real values.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
 <span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
@@ -173,14 +183,14 @@ The outcome variable y should always have the columnname 'label'.</p>
 
 <p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
 <h1>Hyperparameter tuning with Grid search and crossvalidation</h1>
-<p>A gridsearch can be performed to find the optimal number of trees.</p>
+<p>A gridsearch can be performed to find the optimal number of trees out of 1, 3, 50 and 100 number of trees. Also 5 fold crossvalidation is added.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
 <span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
 
 <span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">Pipeline</span><span class="p">(</span><span class="nx">stages</span><span class="o">=</span><span class="p">[</span><span class="nx">assembler</span><span class="p">,</span> <span class="nx">scaler</span><span class="p">,</span> <span class="nx">regressor</span><span class="p">])</span>
 
-<span class="nx">num_trees</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">40</span><span class="p">,</span> <span class="mf">50</span><span class="p">,</span> <span class="mf">60</span><span class="p">,</span> <span class="mf">100</span><span class="p">]</span>
+<span class="nx">num_trees</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">50</span><span class="p">,</span> <span class="mf">100</span><span class="p">]</span>
 <span class="nx">grid</span> <span class="o">=</span> <span class="p">(</span>
    <span class="nx">ParamGridBuilder</span><span class="p">()</span>
    <span class="p">.</span><span class="nx">addGrid</span><span class="p">(</span><span class="nx">regressor</span><span class="p">.</span><span class="nx">numTrees</span><span class="p">,</span> <span class="nx">num_trees</span><span class="p">)</span>
@@ -195,7 +205,7 @@ The outcome variable y should always have the columnname 'label'.</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p>A CrossValidator is created and the model, evaluator and grid has been sepcified. The cv_model now contains the best model based on the MSE.</p>
+<p>The cv_model now contains the best model based on the MSE. With this bestmodel again predictions can be made and evaluated to get the <strong>MSE</strong> and the <strong>R2</strong>.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">cv_model</span> <span class="o">=</span> <span class="nx">cv</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">)</span>
 
 <span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">cv_model</span><span class="p">.</span><span class="nx">bestModel</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
