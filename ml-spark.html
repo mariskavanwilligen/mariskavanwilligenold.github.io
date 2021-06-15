@@ -90,7 +90,89 @@
 
       <div class="col-main w3-container">
         <section id="content">
-          
+          <div class="highlight"><pre><span></span><code><span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">regression</span> <span class="k">import</span> <span class="nx">RandomForestRegressor</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">tuning</span> <span class="k">import</span> <span class="nx">ParamGridBuilder</span><span class="p">,</span>  <span class="nx">CrossValidator</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">feature</span> <span class="k">import</span> <span class="nx">VectorAssembler</span> <span class="p">,</span> <span class="nx">StringIndexer</span><span class="p">,</span> <span class="nx">MinMaxScaler</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span> <span class="k">import</span> <span class="nx">Pipeline</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">evaluation</span> <span class="k">import</span> <span class="nx">RegressionEvaluator</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">context</span> <span class="k">import</span> <span class="nx">SparkContext</span>
+<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">session</span> <span class="k">import</span> <span class="nx">SparkSession</span>
+<span class="k">import</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">functions</span> <span class="nx">as</span> <span class="nx">F</span>
+
+<span class="nx">sc</span> <span class="o">=</span> <span class="nx">SparkContext</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<span class="nx">spark</span> <span class="o">=</span> <span class="nx">SparkSession</span><span class="p">(</span><span class="nx">sc</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
+
+<span class="nx">boston</span> <span class="o">=</span> <span class="p">(</span><span class="nx">boston</span><span class="p">.</span><span class="nx">dropna</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">drop</span><span class="p">(</span><span class="s1">&#39;_c0&#39;</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;medv&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">))</span>
+
+<span class="nx">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;crim&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;zn&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;indus&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;chas&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;nox&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;rm&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;age&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;dis&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;rad&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;tax&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;ptratio&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;lstat&#39;</span><span class="p">]</span>
+
+<span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Train count:&quot;</span><span class="p">,</span> <span class="nx">train_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
+<span class="nx">print</span><span class="p">(</span><span class="s1">&#39;Test count:&#39;</span><span class="p">,</span> <span class="nx">test_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
+</code></pre></div>
+
+<h3>Without grid search and cross validation</h3>
+<div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
+<span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
+
+<span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">Pipeline</span><span class="p">(</span><span class="nx">stages</span><span class="o">=</span><span class="p">[</span><span class="nx">assembler</span><span class="p">,</span> <span class="nx">scaler</span><span class="p">,</span> <span class="nx">regressor</span><span class="p">])</span>
+<span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">pipeline</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">).</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
+
+<span class="nx">evaluator</span> <span class="o">=</span> <span class="nx">RegressionEvaluator</span><span class="p">()</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;MSE:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">}))</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
+</code></pre></div>
+
+<h1>With Grid search and crossvalidation</h1>
+<div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
+<span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
+
+<span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">Pipeline</span><span class="p">(</span><span class="nx">stages</span><span class="o">=</span><span class="p">[</span><span class="nx">assembler</span><span class="p">,</span> <span class="nx">scaler</span><span class="p">,</span> <span class="nx">regressor</span><span class="p">])</span>
+
+<span class="nx">num_trees</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">40</span><span class="p">,</span> <span class="mf">50</span><span class="p">,</span> <span class="mf">60</span><span class="p">,</span> <span class="mf">100</span><span class="p">]</span>
+<span class="nx">grid</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="nx">ParamGridBuilder</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">addGrid</span><span class="p">(</span><span class="nx">regressor</span><span class="p">.</span><span class="nx">numTrees</span><span class="p">,</span> <span class="nx">num_trees</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">build</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nx">cv</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="nx">CrossValidator</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">setEstimator</span><span class="p">(</span><span class="nx">pipeline</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">setEvaluator</span><span class="p">(</span><span class="nx">RegressionEvaluator</span><span class="p">(</span><span class="nx">metricName</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">))</span>
+   <span class="p">.</span><span class="nx">setEstimatorParamMaps</span><span class="p">(</span><span class="nx">grid</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">setNumFolds</span><span class="p">(</span><span class="mf">5</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nx">cv_model</span> <span class="o">=</span> <span class="nx">cv</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">)</span>
+
+<span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">cv_model</span><span class="p">.</span><span class="nx">bestModel</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
+<span class="nx">with_predictions</span><span class="p">.</span><span class="nx">select</span><span class="p">([</span><span class="s2">&quot;features&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;prediction&quot;</span><span class="p">]).</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
+
+<span class="nx">evaluator</span> <span class="o">=</span> <span class="nx">RegressionEvaluator</span><span class="p">()</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;MSE:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">}))</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
+</code></pre></div>
         </section>
 
         <br><br><br>
