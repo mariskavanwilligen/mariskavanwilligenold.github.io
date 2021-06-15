@@ -100,22 +100,45 @@ the data. </p>
 <p>This simulation study makes use of a full factorial 3-by-3-by-2 design
 where systematically varied sample sizes and effect sizes are used in the data
 generating process. Additionally, varied number of neighbors k are used in the
-kNN classifiers.</p>
+kNN classifiers.</p>
 <p><img alt="" src="/images/Thesis/Thesis4b.png"></p>
-<p>For each of the 100 replications, SUBiNN is fitted to a data set
+<p>For each of the 100 replications, SUBiNN is fitted to a data set
 with 10 uniformly distributed features with one main effect and two interaction
 effects. The power, type I error and false discovery rate will be estimated to
 measure the feature selection performance in every condition. The stability of
 the results is examined in a follow-up study with one data set.</p>
 <p><img alt="" src="/images/Thesis/Thesis6.png"></p>
 <h2>Data generation process</h2>
+<p>For each replication, a new data set of 10 independent distributed
+features in the range -1 till +1 is generated with a specific sample size and effect size. With these features two interactions effects (X2-X3 and X5-X6) and
+one main effecg X7 are defined. The data generating process is given by:</p>
+<p><img alt="" src="/images/Thesis/formula.png"></p>
+<p>Function S returns a 1 when the statement is fullfilled and a -1 otherwise. With
+the probabilities, observations from a binominal distribution are sampled. The
+main effect of X7 is defined as a step function. The data points of X7 with a
+value between -1 and -0.5 or between 0 and 0.5 are returning a 1 by function S.
+All the other values of X7 are returning a -1.
+The two interaction effects can be described as 'Four Blocks' and 'Gaussian
+ordination'. These two interactions are nonlinear and described by Yuan et al.
+(2019). Additionally, the Gaussian ordination is also used in a simulation study
+by Gul et al. (2016). Both interactions are pure interactions in the sense that
+no linear regression model will be able to classify a data point correctly if there
+is one pure interaction effect and an outcome variable. The interactions are
+expected to be informative and not the linear main effects of the variables used
+in the interactions.
+The interactions before sampling from a binomial distribution are visualized
+in Figure below. The left plot shows the <code>Four Blocks' interaction effect between X2
+and X3 and the right plots shows the</code>Gaussian ordination' interaction effect
+between X5 and X6. The two different colors represent the two different classes
+of outcome vector y.</p>
 <p><img alt="" src="/images/Thesis/Thesis13.png"></p>
 <h2>Results &amp; Conclusion</h2>
 <p><img alt="" src="/images/Thesis/Thesis14.png">  </p>
 <p><img alt="" src="/images/Thesis/Thesis12.png"></p>
 <p>The results of this simulation study show that a bigger effect size and sample
-size leads to an increased ability to identify the interaction and main effects.
-Furthermore, the different values of neighbors did not have a significant impact on the power. Although, the number of neighbors did have an impact
+size leads to an increased ability to identify the interaction and main effects.</p>
+<blockquote>
+<p>Furthermore, the different values of neighbors did not have a significant impact on the power. Although, the number of neighbors did have an impact
 on the type I error, a higher number of neighbors will result in a lower type
 I error. In all the conditions, the false discovery rates are quite high, mean-
 ing that of all the selected base-learners, there are still a few uninformative
@@ -125,6 +148,7 @@ is performed. Based on this simulation study and the follow-up study, it is
 strongly recommended to have a sample size of at least 500 and the number
 of neighbors set to 10 or the square root of N with repeated cross-validation to identify main
 effects and interactions with a SUBiNN model.</p>
+</blockquote>
         </section>
 
         <br><br><br>
