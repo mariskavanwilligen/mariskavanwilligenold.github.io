@@ -154,7 +154,7 @@ The outcome column <strong>medv</strong> is renamend as <strong>label</strong> t
 <p><strong>Estimator</strong>: Fits on a DataFrame and produces a Transformer.</p>
 <p><strong>Parameter</strong>: Common API for specifying parameters.</p>
 </blockquote>
-<p>The <strong>VectorAssembler</strong> is a transformer that combines a given list of columns into a single vector column and <strong>MinMaxScaler</strong> transforms a dataset of Vector rows, rescaling each feature to a specific range (often [0, 1]). Then, a random forest regressor is used to model the data.
+<p>The <strong>VectorAssembler</strong> is a transformer that combines a given list of columns into a single vector column and <strong>MinMaxScaler</strong> transforms a dataset of Vector rows, rescaling each feature to a specific range (often [0, 1]). Then, a random forest regressor is used to model the data. Ofcourse, before specifyng the model, more preprocessing steps can be defined if necessary.
 After the pipeline has been set up and the model has been fitted, the predictions can be derived with .transform() and the <strong>MSE</strong> and <strong>R2</strong> can be calculated with the predictions and the real values.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
@@ -204,6 +204,7 @@ After the pipeline has been set up and the model has been fitted, the prediction
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/withgrid.png"></p>
+<p>For now, this blogpost showed what I learned about SparkML and how to create a simple model with a pipeline, grid search and crossvalidation with SparkML instead of Sklearn. Ofcourse, the prediction accuracy and the MSE &amp; R2 can be improved by implementing more advanced model techniques. It could also be very beneficial to do more preprocessing. </p>
         </section>
 
         <br><br><br>
