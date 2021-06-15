@@ -123,12 +123,17 @@
  <span class="s1">&#39;black&#39;</span><span class="p">,</span>
  <span class="s1">&#39;lstat&#39;</span><span class="p">]</span>
 
-<span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
+<span class="nx">boston</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/mlspark/display.png"></p>
+<div class="highlight"><pre><span></span><code><span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Train count:&quot;</span><span class="p">,</span> <span class="nx">train_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
 <span class="nx">print</span><span class="p">(</span><span class="s1">&#39;Test count:&#39;</span><span class="p">,</span> <span class="nx">test_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
 </code></pre></div>
 
+<p><img alt="" src="/images/mlspark/counts.png"></p>
 <h3>Without grid search and cross validation</h3>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
@@ -142,6 +147,7 @@
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
 </code></pre></div>
 
+<p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
 <h1>With Grid search and crossvalidation</h1>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
@@ -173,6 +179,8 @@
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;MSE:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">}))</span>
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
 </code></pre></div>
+
+<p><img alt="" src="/images/mlspark/withgrid.png"></p>
         </section>
 
         <br><br><br>
