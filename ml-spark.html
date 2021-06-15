@@ -90,21 +90,8 @@
 
       <div class="col-main w3-container">
         <section id="content">
-          <div class="highlight"><pre><span></span><code><span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">regression</span> <span class="k">import</span> <span class="nx">RandomForestRegressor</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">tuning</span> <span class="k">import</span> <span class="nx">ParamGridBuilder</span><span class="p">,</span>  <span class="nx">CrossValidator</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">feature</span> <span class="k">import</span> <span class="nx">VectorAssembler</span> <span class="p">,</span> <span class="nx">StringIndexer</span><span class="p">,</span> <span class="nx">MinMaxScaler</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span> <span class="k">import</span> <span class="nx">Pipeline</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">ml</span><span class="p">.</span><span class="nx">evaluation</span> <span class="k">import</span> <span class="nx">RegressionEvaluator</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">context</span> <span class="k">import</span> <span class="nx">SparkContext</span>
-<span class="nx">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">session</span> <span class="k">import</span> <span class="nx">SparkSession</span>
-<span class="k">import</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">functions</span> <span class="nx">as</span> <span class="nx">F</span>
-
-<span class="nx">sc</span> <span class="o">=</span> <span class="nx">SparkContext</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
-<span class="nx">spark</span> <span class="o">=</span> <span class="nx">SparkSession</span><span class="p">(</span><span class="nx">sc</span><span class="p">)</span>
-</code></pre></div>
-
-<h2>Using Spark Machine Learning to predict prices for houses in Boston</h2>
-<p>The very famous and well known boston housing dataset is used for playing around with Spark ML:
+          <h2>Using Spark Machine Learning to predict prices for houses in Boston</h2>
+<p>The very famous and well known boston housing dataset is used for playing around with Spark ML. The goal is to set up a pipeline with SparkML to predict the house prices.
 The dataset consists of the following features:</p>
 <blockquote>
 <p><strong>CRIM</strong> - per capita crime rate by town</p>
