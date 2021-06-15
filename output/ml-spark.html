@@ -113,7 +113,7 @@
 <strong>AGE</strong> - proportion of owner-occupied units built prior to 1940
 <strong>DIS</strong> - weighted distances to five Boston employment centres</p>
 </blockquote>
-<p>...</p>
+<h2>Loading the dataset</h2>
 <div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
 
 <span class="nx">boston</span> <span class="o">=</span> <span class="p">(</span><span class="nx">boston</span><span class="p">.</span><span class="nx">dropna</span><span class="p">()</span>
@@ -138,6 +138,7 @@
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/display.png"></p>
+<h2>Split in trainset and testset</h2>
 <div class="highlight"><pre><span></span><code><span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
 
 <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Train count:&quot;</span><span class="p">,</span> <span class="nx">train_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
@@ -145,7 +146,18 @@
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/counts.png"></p>
-<h3>Without grid search and cross validation</h3>
+<h3>Fitting a simpel Random forest model without grid search and cross validation</h3>
+<h1>Pipeline:</h1>
+<p>Build ML workflows as a chain of Transformers and Estimators.</p>
+<blockquote>
+<p><strong>DataFrame</strong>: stores data (e.g., input, features, labels, predictions).
+<strong>Transformer</strong>: transforms one DataFrame into another DataFrame.
+<strong>Estimator</strong>: fits on a DataFrame and produces a Transformer.
+<strong>Parameter</strong>: Common API for specifying parameters.</p>
+</blockquote>
+<p>It is necessary to call your columns in a list 'feature_cols' which will be transformed with a VectorAssembler into a features_vector.
+The outcome variable y should always have the columnname 'label'.</p>
+<p>After the pipeline has been set up and the model has been fitted, the predictions can be derived with .transform()</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
 <span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
@@ -160,6 +172,7 @@
 
 <p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
 <h1>With Grid search and crossvalidation</h1>
+<p>A gridsearch can be performed to find the optimal number of trees.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
 <span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
@@ -181,6 +194,7 @@
 <span class="p">)</span>
 </code></pre></div>
 
+<p>A CrossValidator is created and the model, evaluator and grid has been sepcified. The cv_model now contains the best model based on the MSE.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">cv_model</span> <span class="o">=</span> <span class="nx">cv</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">)</span>
 
 <span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">cv_model</span><span class="p">.</span><span class="nx">bestModel</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
