@@ -103,6 +103,17 @@
 <span class="nx">spark</span> <span class="o">=</span> <span class="nx">SparkSession</span><span class="p">(</span><span class="nx">sc</span><span class="p">)</span>
 </code></pre></div>
 
+<h2>Aim: predict prices for houses in Boston</h2>
+<p>Features:</p>
+<blockquote>
+<p><strong>CRIM</strong> - per capita crime rate by town
+<strong>ZN</strong> - proportion of residential land zoned for lots over 25,000 sq.ft.
+<strong>INDUS</strong> - proportion of non-retail business acres per town
+<strong>RM</strong> - average number of rooms per dwelling
+<strong>AGE</strong> - proportion of owner-occupied units built prior to 1940
+<strong>DIS</strong> - weighted distances to five Boston employment centres</p>
+</blockquote>
+<p>...</p>
 <div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
 
 <span class="nx">boston</span> <span class="o">=</span> <span class="p">(</span><span class="nx">boston</span><span class="p">.</span><span class="nx">dropna</span><span class="p">()</span>
