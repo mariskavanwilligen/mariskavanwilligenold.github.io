@@ -52,6 +52,7 @@ SOCIAL = (
 
 DEFAULT_PAGINATION = False
 DEFAULT_CATEGORY = 'Posts'
+GOOGLE_ANALYTICS = 'G-0C50D9NRQT'
 #NEST_HEADER_LOGO = '/images/logo.png'
 # MENUITEMS = (('About meEE', '/aboutme.html'),
 #             ('Contact', '/contact.html'),
