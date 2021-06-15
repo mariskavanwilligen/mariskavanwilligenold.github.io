@@ -147,8 +147,8 @@ The dataset consists of the following features:</p>
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/counts.png"></p>
-<h3>Fitting a simpel Random forest model without grid search and cross validation</h3>
-<h1>Pipeline:</h1>
+<h1>Fitting a simpel Random forest model without grid search and cross validation</h1>
+<h2>Pipeline:</h2>
 <p>Build ML workflows as a chain of Transformers and Estimators.</p>
 <blockquote>
 <p><strong>DataFrame</strong>: stores data (e.g., input, features, labels, predictions).</p>
@@ -172,7 +172,7 @@ The outcome variable y should always have the columnname 'label'.</p>
 </code></pre></div>
 
 <p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
-<h1>Hyperparameter tuning ith Grid search and crossvalidation</h1>
+<h1>Hyperparameter tuning with Grid search and crossvalidation</h1>
 <p>A gridsearch can be performed to find the optimal number of trees.</p>
 <div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
 <span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
