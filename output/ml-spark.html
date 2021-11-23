@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Machine Learning with Spark &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2021-06-14" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Machine Learning with Spark"/>
+    <meta property="og:description" content="Using Spark Machine Learning to predict house prices in Boston"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/ml-spark.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Machine Learning with Spark">
+    <meta name="twitter:description" content="Using Spark Machine Learning to predict house prices in Boston">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/ml-spark.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Machine Learning with Spark</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2021-06-14T15:36:00+02:00">Mon 14 June 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/ml.html" title="All articles with Ml tag">#ML</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/spark.html" title="All articles with Spark tag">#Spark</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/sklearn.html" title="All articles with Sklearn tag">#sklearn</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <p><img src="/images/mlspark/spark.png" alt="drawing" width="400"/></p>
+<h2>Using Spark Machine Learning to predict prices for houses in Boston</h2>
+<p>The very famous and well known boston housing dataset is used for playing around with Spark ML. The goal is to set up a pipeline with SparkML to predict the house prices.
+The dataset consists of the following features:</p>
+<blockquote>
+<p><strong>CRIM</strong> - per capita crime rate by town</p>
+<p><strong>ZN</strong> - proportion of residential land zoned for lots over 25,000 sq.ft.</p>
+<p><strong>INDUS</strong> - proportion of non-retail business acres per town</p>
+<p><strong>RM</strong> - average number of rooms per dwelling</p>
+<p><strong>AGE</strong> - proportion of owner-occupied units built prior to 1940</p>
+<p><strong>DIS</strong> - weighted distances to five Boston employment centres</p>
+<p><strong>CHAS</strong> - Charles River dummy variable (1 if tract bounds river; 0 otherwise)</p>
+<p><strong>NOX</strong> - nitric oxides concentration (parts per 10 million)</p>
+<p><strong>RAD</strong> - index of accessibility to radial highways</p>
+<p><strong>TAX</strong> - full-value property-tax rate per $10,000</p>
+<p><strong>PTRATIO</strong> - pupil-teacher ratio by town</p>
+<p><strong>B</strong> - 1000(Bk - 0.63)^2 where Bk is the proportion of blacks by town</p>
+<p><strong>LSTAT</strong> - % lower status of the population</p>
+<p><strong>MEDV</strong> - Median value of owner-occupied homes in $1000's</p>
+</blockquote>
+<h2>Loading the dataset</h2>
+<p>First the dataset is going to be loaded in. <code>header=True</code> is used, so the colnames are already there. Furthermore, <code>inferSchema=True</code> will let Spark decide on each coltype. It is also possible to specify this manually by giving a schema. The extra index column and rows with missing values are being dropped.
+The outcome column <code>medv</code> is renamend as <code>label</code> this is important to use the different SparkML functions. Life is going to be more easier if the outcome column is called <code>label</code> and the other features are the <code>feature_cols</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">boston</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;Boston.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
+
+<span class="nx">boston</span> <span class="o">=</span> <span class="p">(</span><span class="nx">boston</span><span class="p">.</span><span class="nx">dropna</span><span class="p">()</span>
+         <span class="p">.</span><span class="nx">drop</span><span class="p">(</span><span class="s1">&#39;_c0&#39;</span><span class="p">)</span>
+         <span class="p">.</span><span class="nx">withColumnRenamed</span><span class="p">(</span><span class="s1">&#39;medv&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">))</span>
+
+<span class="nx">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;crim&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;zn&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;indus&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;chas&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;nox&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rm&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;age&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;dis&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rad&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;tax&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;ptratio&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;lstat&#39;</span><span class="p">]</span>
+
+<span class="nx">boston</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/mlspark/display.png"></p>
+<h2>Split in trainset and testset</h2>
+<p>Next step is to split the dataset in a train and test set wtih ratio 80/20, the random seed is set to archieve the same split and therefore same result each time the code will run.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">train_df</span><span class="p">,</span> <span class="nx">test_df</span> <span class="o">=</span> <span class="nx">boston</span><span class="p">.</span><span class="nx">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span> <span class="nx">seed</span><span class="o">=</span><span class="mf">707</span><span class="p">)</span>
+
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Train count:&quot;</span><span class="p">,</span> <span class="nx">train_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
+<span class="nx">print</span><span class="p">(</span><span class="s1">&#39;Test count:&#39;</span><span class="p">,</span> <span class="nx">test_df</span><span class="p">.</span><span class="nx">count</span><span class="p">())</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/mlspark/counts.png"></p>
+<h1>Fitting a simpel Random forest model without grid search and cross validation</h1>
+<p>Build ML workflows as a chain of Transformers and Estimators.</p>
+<blockquote>
+<p><strong>DataFrame</strong>: Boston data (e.g., input, features, labels, predictions).</p>
+<p><strong>Transformer</strong>: Transforms one DataFrame into another DataFrame.</p>
+<p><strong>Estimator</strong>: Fits on a DataFrame and produces a Transformer.</p>
+<p><strong>Parameter</strong>: Common API for specifying parameters.</p>
+</blockquote>
+<p>The <code>VectorAssembler</code> is a transformer that combines a given list of columns into a single vector column and <code>MinMaxScaler</code> transforms a dataset of Vector rows, rescaling each feature to a specific range (often <code>[0, 1]</code>). Then, a random forest regressor is used to model the data. Ofcourse, before specifyng the model, more preprocessing steps can be defined if necessary.
+After the pipeline has been set up and the model has been fitted, the predictions can be derived with <code>.transform()</code> and the MSE and R2 can be calculated with the predictions and the real values.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
+<span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
+
+<span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">Pipeline</span><span class="p">(</span><span class="nx">stages</span><span class="o">=</span><span class="p">[</span><span class="nx">assembler</span><span class="p">,</span> <span class="nx">scaler</span><span class="p">,</span> <span class="nx">regressor</span><span class="p">])</span>
+<span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">pipeline</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">).</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
+
+<span class="nx">evaluator</span> <span class="o">=</span> <span class="nx">RegressionEvaluator</span><span class="p">()</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;MSE:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">}))</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/mlspark/withoutgrid.png"></p>
+<h1>Hyperparameter tuning with Grid search and crossvalidation</h1>
+<p>A gridsearch can be performed to find the optimal number of trees out of 1, 3, 50 and 100 number of trees. Also 5 fold crossvalidation is added.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">assembler</span> <span class="o">=</span> <span class="nx">VectorAssembler</span><span class="p">(</span><span class="nx">inputCols</span><span class="o">=</span><span class="nx">feature_cols</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">)</span>
+<span class="nx">scaler</span> <span class="o">=</span> <span class="nx">MinMaxScaler</span><span class="p">(</span><span class="nx">inputCol</span><span class="o">=</span><span class="s1">&#39;features_vector&#39;</span><span class="p">,</span> <span class="nx">outputCol</span><span class="o">=</span><span class="s1">&#39;features&#39;</span><span class="p">)</span>
+<span class="nx">regressor</span> <span class="o">=</span> <span class="nx">RandomForestRegressor</span><span class="p">()</span>
+
+<span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">Pipeline</span><span class="p">(</span><span class="nx">stages</span><span class="o">=</span><span class="p">[</span><span class="nx">assembler</span><span class="p">,</span> <span class="nx">scaler</span><span class="p">,</span> <span class="nx">regressor</span><span class="p">])</span>
+
+<span class="nx">num_trees</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">50</span><span class="p">,</span> <span class="mf">100</span><span class="p">]</span>
+<span class="nx">grid</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="nx">ParamGridBuilder</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">addGrid</span><span class="p">(</span><span class="nx">regressor</span><span class="p">.</span><span class="nx">numTrees</span><span class="p">,</span> <span class="nx">num_trees</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">build</span><span class="p">()</span>
+<span class="p">)</span>
+<span class="nx">cv</span> <span class="o">=</span> <span class="p">(</span>
+   <span class="nx">CrossValidator</span><span class="p">()</span>
+   <span class="p">.</span><span class="nx">setEstimator</span><span class="p">(</span><span class="nx">pipeline</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">setEvaluator</span><span class="p">(</span><span class="nx">RegressionEvaluator</span><span class="p">(</span><span class="nx">metricName</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">))</span>
+   <span class="p">.</span><span class="nx">setEstimatorParamMaps</span><span class="p">(</span><span class="nx">grid</span><span class="p">)</span>
+   <span class="p">.</span><span class="nx">setNumFolds</span><span class="p">(</span><span class="mf">5</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>The cv_model now contains the best model based on the MSE. With this bestmodel again predictions can be made and evaluated to get the MSE and the R2.</p>
+<div class="highlight"><pre><span></span><code><span class="nx">cv_model</span> <span class="o">=</span> <span class="nx">cv</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">train_df</span><span class="p">)</span>
+
+<span class="nx">with_predictions</span> <span class="o">=</span> <span class="nx">cv_model</span><span class="p">.</span><span class="nx">bestModel</span><span class="p">.</span><span class="nx">transform</span><span class="p">(</span><span class="nx">test_df</span><span class="p">)</span>
+<span class="nx">with_predictions</span><span class="p">.</span><span class="nx">select</span><span class="p">([</span><span class="s2">&quot;features&quot;</span><span class="p">,</span> <span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;prediction&quot;</span><span class="p">]).</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
+
+<span class="nx">evaluator</span> <span class="o">=</span> <span class="nx">RegressionEvaluator</span><span class="p">()</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;MSE:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">}))</span>
+<span class="nx">print</span><span class="p">(</span><span class="s2">&quot;R2:&quot;</span><span class="p">,</span> <span class="nx">evaluator</span><span class="p">.</span><span class="nx">evaluate</span><span class="p">(</span><span class="nx">with_predictions</span><span class="p">,</span> <span class="p">{</span><span class="nx">evaluator</span><span class="p">.</span><span class="nx">metricName</span><span class="o">:</span> <span class="s2">&quot;r2&quot;</span><span class="p">}))</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/mlspark/withgrid.png"></p>
+<p>For now, this blogpost showed what I learned about SparkML and how to create a simple model with a pipeline, grid search and crossvalidation with SparkML instead of Sklearn. Ofcourse, the prediction accuracy and the MSE &amp; R2 can be improved by implementing more advanced model techniques. It could also be very beneficial to do more preprocessing. </p>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/ml-spark.html&amp;t=Mariska%20van%20Willigen%3A%20Machine%20Learning%20with%20Spark" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/ml-spark.html&amp;text=Mariska%20van%20Willigen%3A%20Machine%20Learning%20with%20Spark" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/ml-spark.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
