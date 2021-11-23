@@ -83,4 +83,15 @@ update:
 	ghp-import output -b gh-pages
 	git push git@github.com:mariskavanwilligen/mariskavanwilligen.github.io.git gh-pages:master
 
+update2:
+	git add .
+	git status 
+	git commit -m 'Some descriptive commit message'
+	git push origin master
+
+	git checkout gh-pages
+	git rebase master 
+	git push origin gh-pages
+	git checkout master
+
 .PHONY: html help clean regenerate serve serve-global devserver publish github
