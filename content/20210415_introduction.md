@@ -8,7 +8,7 @@ Summary: Who am I?
 Illustration: sea.jpg
 
 ## Introduction
-Hi EVERYONE!!!!, I wil introduce myself here, blaa blaa blaa My name is Mariska and I might update this blog or maybe never and just make it for fun. 
+Hi EVERYONE! :) , I wil introduce myself here, blaa blaa blaa My name is Mariska and I might update this blog or maybe never and just make it for fun. 
 
 > Who knows?
 ``` js
