@@ -81,7 +81,8 @@ update:
 	git commit -m 'update'
 	pelican content -o output -s pelicanconf.py  
 	ghp-import output -b gh-pages
-	git push git@github.com:mariskavanwilligen/mariskavanwilligen.github.io.git gh-pages:master
+	git push -f origin gh-pages
+#git push git@github.com:mariskavanwilligen/mariskavanwilligen.github.io.git gh-pages:master
 
 update2:
 	git add .
