@@ -26,14 +26,14 @@
 
     <meta property="og:type" content="article"/>
     <meta property="og:title" content="Shapley values"/>
-    <meta property="og:description" content="Short introduction to Shapley values"/>
+    <meta property="og:description" content="Short introduction about Shapley values and how they can be used to explain machine learning models"/>
     <meta property="og:site_name" content="Mariska van Willigen" />
-    <meta property="og:url" content="https://mariskavanwilligen.github.io/Shapley-values.html"/>
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/shapley-values.html"/>
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Shapley values">
-    <meta name="twitter:description" content="Short introduction to Shapley values">
-    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/Shapley-values.html">
+    <meta name="twitter:description" content="Short introduction about Shapley values and how they can be used to explain machine learning models">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/shapley-values.html">
 
     <!-- Feed -->
 
@@ -101,11 +101,38 @@
         <section id="content">
           <h2>Introduction</h2>
 <p>This will be about the Shapley values</p>
+<p>How do we get from the base rate to the prediction made?</p>
 <blockquote>
-<p>Nice quote about shapley values</p>
+<p>Let's have a look!</p>
 </blockquote>
+<h2>Bike rental dataset</h2>
+<p>This dataset contains daily counts of rented bicycles from the bicycle rental company Capital-Bikeshare in Washington D.C., along with weather and seasonal information. The data was kindly made openly available by Capital-Bikeshare. Fanaee-T and Gama (2013)14 added weather data and season information. The goal is to predict how many bikes will be rented depending on the weather and the day. The data can be downloaded from the UCI Machine Learning Repository.</p>
+<p>New features were added to the dataset and not all original features were used for the examples in this book. Here is the list of features that were used:</p>
+<ul>
+<li>Count of bicycles including both casual and registered users. The count is used as the target in the regression task.</li>
+<li>The season, either spring, summer, fall or winter.</li>
+<li>Indicator whether the day was a holiday or not.</li>
+<li>The year, either 2011 or 2012.</li>
+<li>Number of days since the 01.01.2011 (the first day in the dataset). This feature was introduced to take account of the trend over time.</li>
+<li>Indicator whether the day was a working day or weekend.</li>
+<li>The weather situation on that day.</li>
+<li>Temperature in degrees Celsius.</li>
+<li>Relative humidity in percent (0 to 100).</li>
+<li>Wind speed in km per hour.</li>
+</ul>
 <div class="highlight"><pre><span></span><code><span class="err">#</span> <span class="nx">Some</span> <span class="nx">code</span> <span class="nx">example</span>
+<span class="k">import</span> <span class="nx">pyspark</span>
+<span class="kr">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">context</span> <span class="k">import</span> <span class="nx">SparkContext</span>
+<span class="kr">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">session</span> <span class="k">import</span> <span class="nx">SparkSession</span>
+<span class="nx">sc</span> <span class="o">=</span> <span class="nx">SparkContext</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<span class="nx">spark</span> <span class="o">=</span> <span class="nx">SparkSession</span><span class="p">(</span><span class="nx">sc</span><span class="p">)</span>
+
+<span class="nx">bike_data</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;data/bike_sales.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
+
+<span class="nx">bike_data</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
 </code></pre></div>
+
+<p><img alt="" src="/images/data/data_view.png"></p>
         </section>
 
         <br><br><br>
@@ -127,13 +154,13 @@
 
           <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
           <div id="share" class="share">
-            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/Shapley-values.html&amp;t=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-indigo">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/shapley-values.html&amp;t=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-indigo">
               <i class="fa fa-facebook"></i> <span>Facebook</span>
             </a>
-            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/Shapley-values.html&amp;text=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-blue">
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/shapley-values.html&amp;text=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-blue">
               <i class="fa fa-twitter"></i> <span>Twitter</span>
             </a>
-            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/Shapley-values.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/shapley-values.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
               <i class="fa fa-google-plus"></i> <span>Google</span>
             </a>
           </div>
