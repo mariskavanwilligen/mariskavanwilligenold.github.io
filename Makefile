@@ -1,3 +1,9 @@
+# For an update:
+# conda activate fun
+# make your change & type 'Make update'
+# Go to github and make a pr
+# set base to master
+
 PY?=python3
 PELICAN?=pelican
 PELICANOPTS=
