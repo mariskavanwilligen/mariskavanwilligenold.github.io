@@ -7,6 +7,8 @@ Authors: Mariska van Willigen
 Summary: Basics of Object-oriented python programming: Inheritance explained
 
 ## Inheritance
+Inheritance is a very important feature of object oriented programming (OOP). It refers to a class that uses almost all attributes and methods of another class. The new class is called the **child** or **subclass**. The already existing class is called the **parent** or **base class**. 
+There are different options to modify or extend the inherinted class, such as overriding some attributes or overriding some methods.
 
 ## Overriding attributes
 You can override an attribute of the parent class in the subclass:

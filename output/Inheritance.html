@@ -107,6 +107,7 @@
         <section id="content">
           <h2>Inheritance</h2>
 <h2>Overriding attributes</h2>
+<p>You can override an attribute of the parent class in the subclass:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Product</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
     <span class="nx">product</span> <span class="o">=</span> <span class="s2">&quot;Coca Cola&quot;</span>
 
@@ -114,20 +115,21 @@
     <span class="nx">product</span> <span class="o">=</span> <span class="s2">&quot;Fanta&quot;</span>
 </code></pre></div>
 
+<p>Any instance of the new class will have the <em>Fanta</em> as product. Any instance of the parent/original class will have as product <em>Coca Cola</em>.</p>
 <h2>Overriding methods</h2>
-<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Circle</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
-<span class="p">...</span>
-    <span class="nx">def</span> <span class="nx">grow</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">factor</span><span class="o">=</span><span class="mf">2</span><span class="p">)</span><span class="o">:</span>
-        <span class="s2">&quot;&quot;&quot;grows the circle&#39;s diameter by factor&quot;&quot;&quot;</span>
-        <span class="nx">self</span><span class="p">.</span><span class="nx">diameter</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">diameter</span> <span class="o">*</span> <span class="nx">factor</span>
-<span class="p">...</span>
+<p>Same as with overriding methods:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Product</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">lift_factor</span><span class="o">=</span><span class="mf">5</span><span class="p">)</span>
+        <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">last_sales</span> <span class="o">*</span> <span class="nx">factor</span>
+        <span class="k">return</span> <span class="nx">forecast</span>
 
-<span class="kd">class</span> <span class="nx">NewCircle</span><span class="p">(</span><span class="nx">Circle</span><span class="p">)</span><span class="o">:</span>
-<span class="p">...</span>
-    <span class="nx">def</span> <span class="nx">grow</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">factor</span><span class="o">=</span><span class="mf">2</span><span class="p">)</span><span class="o">:</span>
-        <span class="s2">&quot;&quot;&quot;grows the area by factor...&quot;&quot;&quot;</span>
-        <span class="nx">self</span><span class="p">.</span><span class="nx">diameter</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">diameter</span> <span class="o">*</span> <span class="nx">math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+<span class="kd">class</span> <span class="nx">NewProduct</span><span class="p">(</span><span class="nx">Product</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">lift_factor</span><span class="o">=</span><span class="mf">5</span><span class="p">)</span>
+        <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">last_sales</span> <span class="o">*</span> <span class="nx">lift_factor</span> <span class="o">*</span> <span class="nx">math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">forecast</span>
 </code></pre></div>
+
+<p>The new subclass NewProduct has a changed forecast_product function. Instances from the parent/original class will still have the old function forecat_product from the Product class.</p>
         </section>
 
         <br><br><br>
