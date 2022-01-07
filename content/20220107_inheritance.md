@@ -9,6 +9,7 @@ Summary: Basics of Object-oriented python programming: Inheritance explained
 ## Inheritance
 
 ## Overriding attributes
+You can override an attribute of the parent class in the subclass:
 ``` js
 class Product(object):
     product = "Coca Cola"
@@ -16,19 +17,20 @@ class Product(object):
 class NewProduct(Product):
     product = "Fanta"
 ```
+Any instance of the new class will have the *Fanta* as product. Any instance of the parent/original class will have as product *Coca Cola*.
 
 ## Overriding methods
+Same as with overriding methods:
 ``` js
-class Circle(object):
-...
-    def grow(self, factor=2):
-        """grows the circle's diameter by factor"""
-        self.diameter = self.diameter * factor
-...
+class Product(object):
+    def forecast_product(self, lift_factor=5)
+        forecast = self.last_sales * factor
+        return forecast
 
-class NewCircle(Circle):
-...
-    def grow(self, factor=2):
-        """grows the area by factor..."""
-        self.diameter = self.diameter * math.sqrt(2)
+class NewProduct(Product):
+    def forecast_product(self, lift_factor=5)
+        forecast = self.last_sales * lift_factor * math.sqrt(2)
+        return forecast
+
 ```
+The new subclass NewProduct has a changed forecast_product function. Instances from the parent/original class will still have the old function forecat_product from the Product class.
