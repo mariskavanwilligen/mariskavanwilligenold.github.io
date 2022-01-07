@@ -93,18 +93,17 @@ issubclass(X, X)
 # True
 ```
 ## Advantages of inheritance
-- Modular Codebase
-    Code is broken down into modules, which makes it easier to understand. 
-- Code Reusability
-    The childs reuses code from the parentclass without rewriting them. This saves time and coding effort.
-- Less Development
-    Changes made in the parentclass will be inherited by all the childclasses. With good written code you only have to add your chnages at one place. This will save time and costs.
+1.  Modular Codebase
+    - Code is broken down into modules, which makes it easier to understand. 
+2.  Code Reusability
+    - The childs reuses code from the parentclass without rewriting them. This saves time and coding effort.
+3. Less Development
+    - Changes made in the parentclass will be inherited by all the childclasses. With good written code you only have to add your chnages at one place. This will save time and costs.
 
 ## Weakness of inheritance
-- Decrease of execution speed
-    You have to load multiple classes because they are interdependent on each other
-- Tightly Coupled Classes
-    Parent classes can be executed independently, but child classes can not be executed without defining their parent classes.
-- Explosion of subclasses
-    The book *Gang of Four* states that a crucial weakness of inheritance as a design strategy is that a class often needs to be specialized along several different design axes at once, leading to an explosion of subclasses to support every combination.
-    
+1. Decrease of execution speed
+    - You have to load multiple classes because they are interdependent on each other
+2. Tightly Coupled Classes
+    - Parent classes can be executed independently, but child classes can not be executed without defining their parent classes.
+3. Explosion of subclasses
+    - The book *Gang of Four* states that a crucial weakness of inheritance as a design strategy is that a class often needs to be specialized along several different design axes at once, leading to an explosion of subclasses to support every combination.
