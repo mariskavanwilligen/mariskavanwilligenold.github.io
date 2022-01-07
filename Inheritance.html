@@ -106,6 +106,8 @@
       <div class="col-main w3-container">
         <section id="content">
           <h2>Inheritance</h2>
+<p>Inheritance is a very important feature of object oriented programming (OOP). It refers to a class that uses almost all attributes and methods of another class. The new class is called the <strong>child</strong> or <strong>subclass</strong>. The already existing class is called the <strong>parent</strong> or <strong>base class</strong>. 
+There are different options to modify or extend the inherinted class, such as overriding some attributes or overriding some methods.</p>
 <h2>Overriding attributes</h2>
 <p>You can override an attribute of the parent class in the subclass:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Product</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span><span class="o">:</span>
@@ -129,7 +131,7 @@
         <span class="k">return</span> <span class="nx">forecast</span>
 </code></pre></div>
 
-<p>The new subclass NewProduct has a changed forecast_product function. Instances from the parent/original class will still have the old function forecat_product from the Product class.</p>
+<p>The subclass has a changed <em>forecast_product</em> function. Instances from the parent/original class will still have the old function <em>forecast_product</em> from the parent class.</p>
         </section>
 
         <br><br><br>
