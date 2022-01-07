@@ -181,6 +181,25 @@ There are different options to modify or extend the inherinted class, such as ov
 <span class="nx">issubclass</span><span class="p">(</span><span class="nx">X</span><span class="p">,</span> <span class="nx">X</span><span class="p">)</span>
 <span class="err">#</span> <span class="nx">True</span>
 </code></pre></div>
+
+<h2>Advantages of inheritance</h2>
+<ul>
+<li>Modular Codebase
+    Code is broken down into modules, which makes it easier to understand. </li>
+<li>Code Reusability
+    The childs reuses code from the parentclass without rewriting them. This saves time and coding effort.</li>
+<li>Less Development
+    Changes made in the parentclass will be inherited by all the childclasses. With good written code you only have to add your chnages at one place. This will save time and costs.</li>
+</ul>
+<h2>Weakness of inheritance</h2>
+<ul>
+<li>Decrease of execution speed
+    You have to load multiple classes because they are interdependent on each other</li>
+<li>Tightly Coupled Classes
+    Parent classes can be executed independently, but child classes can not be executed without defining their parent classes.</li>
+<li>Explosion of subclasses
+    The book <em>Gang of Four</em> states that a crucial weakness of inheritance as a design strategy is that a class often needs to be specialized along several different design axes at once, leading to an explosion of subclasses to support every combination.</li>
+</ul>
         </section>
 
         <br><br><br>
