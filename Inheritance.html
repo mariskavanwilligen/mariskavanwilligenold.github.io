@@ -132,6 +132,55 @@ There are different options to modify or extend the inherinted class, such as ov
 </code></pre></div>
 
 <p>The subclass has a changed <em>forecast_product</em> function. Instances from the parent/original class will still have the old function <em>forecast_product</em> from the parent class.</p>
+<p>However, if you override something in the subclass, be aware of the OOP principles. The subclass should always be substantially similar to its parents. <em>Liskov Substitution Principle</em> refers to the principle which says that objects of a parentclass shall be replaceable with objects of its subclasses without breaking the application.</p>
+<h2>Extending methods</h2>
+<p>Sometimes you want to extend the <em><strong>intit</strong></em>. With the <strong>super()</strong> function you can call methods from the parentclass in your childclass. You can extend the functionallity of this inherited method. </p>
+<p>Example from <em>realpython.com</em>:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Rectangle</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">length</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="nx">length</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">width</span>
+
+    <span class="nx">def</span> <span class="nx">area</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">length</span> <span class="o">*</span> <span class="nx">self</span><span class="p">.</span><span class="nx">width</span>
+
+    <span class="nx">def</span> <span class="nx">perimeter</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">return</span> <span class="mf">2</span> <span class="o">*</span> <span class="nx">self</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="mf">2</span> <span class="o">*</span> <span class="nx">self</span><span class="p">.</span><span class="nx">width</span>
+
+<span class="err">#</span> <span class="nx">Here</span> <span class="nx">we</span> <span class="nx">declare</span> <span class="nx">that</span> <span class="nx">the</span> <span class="nx">Square</span> <span class="kd">class</span> <span class="nx">inherits</span> <span class="kr">from</span> <span class="nx">the</span> <span class="nx">Rectangle</span> <span class="kd">class</span>
+<span class="kd">class</span> <span class="nx">Square</span><span class="p">(</span><span class="nx">Rectangle</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">super</span><span class="p">().</span><span class="nx">__init__</span><span class="p">(</span><span class="nx">length</span><span class="p">,</span> <span class="nx">length</span>
+<span class="nx">square</span> <span class="o">=</span> <span class="nx">Square</span><span class="p">(</span><span class="mf">4</span><span class="p">)</span>
+<span class="nx">quare</span><span class="p">.</span><span class="nx">area</span><span class="p">()</span>        
+</code></pre></div>
+
+<p>Because the methods are so similar you can call superclass <strong><strong>init</strong></strong> function with <strong>super()</strong>. With a small extention that will set the length and width equal and you only need to give a signle length parameter to the square class.</p>
+<h2>Check inheritances</h2>
+<p>With the functions <strong>isinstance()</strong> and <strong>issubclass()</strong> you can check the inheritance.</p>
+<p><strong>isinstance(object, clasinfo)</strong> checks whether a specific object is an instance of a class
+<strong>issubclass(class, classinfo)</strong> checks whether one class is a subclass of another class</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">X</span><span class="o">:</span>
+    <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">Y</span><span class="p">(</span><span class="nx">X</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">pass</span>
+
+<span class="nx">x</span> <span class="o">=</span> <span class="nx">X</span><span class="p">()</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">Y</span><span class="p">()</span>  
+
+<span class="nx">isinstance</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">X</span><span class="p">)</span>
+<span class="err">#</span> <span class="nx">True</span>
+<span class="nx">isinstance</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">Y</span><span class="p">)</span>
+<span class="err">#</span> <span class="nx">False</span>
+
+<span class="nx">issubclass</span><span class="p">(</span><span class="nx">Y</span><span class="p">,</span> <span class="nx">X</span><span class="p">)</span>
+<span class="err">#</span> <span class="nx">True</span>
+<span class="nx">issubclass</span><span class="p">(</span><span class="nx">X</span><span class="p">,</span> <span class="nx">Y</span><span class="p">)</span>
+<span class="err">#</span> <span class="nx">False</span>
+<span class="nx">issubclass</span><span class="p">(</span><span class="nx">X</span><span class="p">,</span> <span class="nx">X</span><span class="p">)</span>
+<span class="err">#</span> <span class="nx">True</span>
+</code></pre></div>
         </section>
 
         <br><br><br>
