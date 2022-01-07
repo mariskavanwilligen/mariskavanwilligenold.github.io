@@ -35,4 +35,4 @@ class NewProduct(Product):
         return forecast
 
 ```
-The new subclass NewProduct has a changed forecast_product function. Instances from the parent/original class will still have the old function forecat_product from the Product class.
+The subclass has a changed *forecast_product* function. Instances from the parent/original class will still have the old function *forecast_product* from the parent class.
