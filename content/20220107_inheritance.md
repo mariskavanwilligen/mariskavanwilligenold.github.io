@@ -36,3 +36,60 @@ class NewProduct(Product):
 
 ```
 The subclass has a changed *forecast_product* function. Instances from the parent/original class will still have the old function *forecast_product* from the parent class.
+
+However, if you override something in the subclass, be aware of the OOP principles. The subclass should always be substantially similar to its parents. *Liskov Substitution Principle* refers to the principle which says that objects of a parentclass shall be replaceable with objects of its subclasses without breaking the application.
+
+## Extending methods
+Sometimes you want to extend the *__intit__*. With the **super()** function you can call methods from the parentclass in your childclass. You can extend the functionallity of this inherited method. 
+
+Example from *realpython.com*:
+``` js
+class Rectangle:
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * self.length + 2 * self.width
+
+# Here we declare that the Square class inherits from the Rectangle class
+class Square(Rectangle):
+    def __init__(self, length):
+        super().__init__(length, length
+square = Square(4)
+quare.area()        
+``` 
+Because the methods are so similar you can call superclass **__init__** function with **super()**. With a small extention that will set the length and width equal and you only need to give a signle length parameter to the square class.
+
+## Check inheritances
+With the functions **isinstance()** and **issubclass()** you can check the inheritance.
+
+**isinstance(object, clasinfo)** checks whether a specific object is an instance of a class
+**issubclass(class, classinfo)** checks whether one class is a subclass of another class
+
+``` js
+class X:
+    pass
+     
+class Y(X):
+    pass
+
+x = X()
+y = Y()  
+
+isinstance(y, X)
+# True
+isinstance(x, Y)
+# False
+
+issubclass(Y, X)
+# True
+issubclass(X, Y)
+# False
+issubclass(X, X)
+# True
+```
+
