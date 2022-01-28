@@ -120,9 +120,9 @@ The Prophet procedure is an additive regression model with four main components:
 <h1>Trend Changepoints</h1>
 <p>Changepoints are the points in time where the rate is changed. This can be due to a different marketing strategy or opening a new distribution centre for example. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series.
 The vertical lines are where the changepoints are defined:</p>
-<p><img src="/images/prophet/changepoints" alt="drawing" width="400"/></p>
+<p><img alt="" src="/images/prophet/changepoints.png"></p>
 <p>Within that 80% 12 changepoints are uniformily selected:
-<img src="/images/prophet/changepoints_select" alt="drawing" width="400"/></p>
+<img alt="" src="images/prophet/changepoints_select.png"></p>
 <ul>
 <li><code>n_changepoints</code> : You can specify how many changepoints you want to be selected, however you can better tune this with adding regularization.</li>
 <li><code>changepoint_range</code>: This is to specify how big the range should be of with Prophet will place the n changepoints. Default is set to 0.80. Which means that the n changepoint will be placed in the first 80% of the time series. This 80% is chosen to avoid overfitting.</li>
@@ -158,7 +158,7 @@ The vertical lines are where the changepoints are defined:</p>
 <span class="nx">holidays</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">concat</span><span class="p">((</span><span class="nx">kerst</span><span class="p">,</span> <span class="nx">nye</span><span class="p">))</span>
 </code></pre></div>
 
-<p><img src="/images/prophet/holidays" alt="drawing" width="400"/></p>
+<p><img alt="" src="/images/prophet/holidays.png"></p>
 <p>After the holidays are specified, you can give the holidays to your Prophet model as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">holidays</span><span class="o">=</span><span class="nx">holidays</span><span class="p">)</span>
 <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
