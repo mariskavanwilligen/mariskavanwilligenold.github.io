@@ -164,8 +164,96 @@ The vertical lines are where the changepoints are defined:</p>
 <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
 </code></pre></div>
 
+<h1>Example</h1>
+<p>Make sure in the preprocessing of youre data that the time column is defined as <strong>ds</strong> (for example date). And the dependent variable as <strong>y</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">regressors</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">&#39;LogTempAvg&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;WeekDayNbr&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="nx">def</span> <span class="nx">prep_prophet_table</span><span class="p">(</span><span class="nx">df</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">prophet_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">df</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Sales&#39;</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">lit</span><span class="p">(</span><span class="nx">datetime</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">date</span><span class="p">()))</span> <span class="err">#</span> <span class="nx">identify</span> <span class="nx">maximum</span> <span class="nx">training</span> <span class="nx">point</span> <span class="nx">based</span> <span class="nx">on</span> <span class="nx">current</span> <span class="nx">date</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;TrainHistory&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">datediff</span><span class="p">(</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">),</span> <span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">))</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">7</span><span class="p">,</span> <span class="mf">1</span><span class="p">).</span><span class="nx">otherwise</span><span class="p">(</span><span class="mf">0</span><span class="p">))</span> <span class="err">#</span> <span class="nx">training</span> <span class="nx">indicator</span><span class="p">,</span> <span class="nx">one</span> <span class="nx">week</span> <span class="nx">before</span> <span class="nx">current</span> <span class="nx">day</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;LogTempAvg&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;TempAvg&#39;</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nx">fillna</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="nx">subset</span> <span class="o">=</span> <span class="p">[</span>
+                         <span class="s1">&#39;Sales&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;LogTempAvg&#39;</span>
+                        <span class="p">])</span>
+
+    <span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ds&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Sales&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TrainHistory&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+            <span class="o">*</span><span class="nx">regressors</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">orderBy</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">prophet_df</span>
+
+<span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">,</span> <span class="nx">starttestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">endtestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">m_reg</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span>
+    <span class="nx">seasonality_prior_scale</span> <span class="o">=</span> <span class="mf">7</span><span class="p">,</span> 
+    <span class="nx">changepoint_prior_scale</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> 
+    <span class="nx">uncertainty_samples</span><span class="o">=</span><span class="mf">0</span><span class="p">,</span> 
+    <span class="nx">holidays</span> <span class="o">=</span> <span class="nx">holidays</span><span class="p">)</span>
+
+  <span class="nx">starttestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="nx">starttestdate</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+  <span class="nx">endtestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="nx">endtestdate</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+
+  <span class="nx">df_reg</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;ds &lt; @starttestdate&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">regressors</span><span class="o">:</span>
+       <span class="nx">m_reg</span><span class="p">.</span><span class="nx">add_regressor</span><span class="p">(</span><span class="nx">reg</span><span class="p">)</span>
+  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">)</span>
+
+  <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="o">:</span> <span class="err">#</span> <span class="nx">rename</span> <span class="nx">columns</span> <span class="k">for</span> <span class="nx">output</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">_reg_</span> 
+        <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">.</span><span class="nx">rename</span><span class="p">(</span><span class="nx">columns</span> <span class="o">=</span> <span class="p">{</span><span class="nx">i</span><span class="o">:</span> <span class="s2">&quot;_reg_&quot;</span><span class="o">+</span><span class="nx">i</span><span class="p">})</span>
+
+  <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="o">:</span>
+    <span class="k">if</span> <span class="nx">not</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">fc_df_reg</span><span class="o">:</span>
+      <span class="nx">fc_df_reg</span><span class="p">[</span><span class="nx">reg</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;yhat&#39;</span><span class="p">])</span>
+
+  <span class="nx">out_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span><span class="s1">&#39;yhat&#39;</span><span class="p">,</span><span class="s1">&#39;PredSales&#39;</span><span class="p">,</span> <span class="o">*</span><span class="nx">grab_cols_reg</span><span class="p">]].</span><span class="nx">assign</span><span class="p">(</span><span class="nx">RunDate</span> <span class="o">=</span> <span class="nx">rundate</span><span class="p">).</span><span class="nx">assign</span><span class="p">(</span><span class="nx">StoreNbr</span> <span class="o">=</span> <span class="nx">storenbr</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">out_df_reg</span>
+</code></pre></div>
+
+<p>How can you use this function:</p>
+<div class="highlight"><pre><span></span><code><span class="err">#</span> <span class="nx">defines</span> <span class="nx">udf</span> <span class="nx">schemas</span> <span class="nx">and</span> <span class="nx">preps</span> <span class="nx">table</span> <span class="k">for</span> <span class="nx">prophet</span> <span class="nx">formatting</span>
+<span class="nx">grab_cols</span> <span class="o">=</span> <span class="nx">regressors</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;trend&#39;</span><span class="p">,</span><span class="s1">&#39;yearly&#39;</span><span class="p">,</span><span class="s1">&#39;weekly&#39;</span><span class="p">]</span>
+<span class="nx">grab_cols_reg</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_reg_&#39;</span> <span class="o">+</span> <span class="nx">reg</span> <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="p">]</span> <span class="err">#</span> <span class="nx">output</span> <span class="nx">names</span> <span class="k">for</span> <span class="nx">used</span> <span class="nx">regreggors</span><span class="p">,</span> <span class="nx">so</span> <span class="nx">they</span> <span class="nx">are</span> <span class="nx">not</span> <span class="nx">the</span> <span class="nx">same</span> <span class="kr">as</span> <span class="nx">input</span> <span class="nx">column</span> <span class="nx">name</span>
+<span class="nx">regressor_schema</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">.</span><span class="nx">join</span><span class="p">([</span><span class="s1">&#39;{} float&#39;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="k">for</span> <span class="nx">x</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="p">])</span>
+
+
+<span class="nx">pandas_udf_schema</span> <span class="o">=</span> <span class="s1">&#39;StoreNbr int, RunDate date, ds date, yhat float, PredSales float,&#39;</span> <span class="o">+</span> <span class="nx">regressor_schema</span> 
+
+<span class="err">#</span> <span class="nx">makes</span> <span class="nx">partitioning</span> <span class="nx">and</span> <span class="nx">runs</span> <span class="nx">item</span> <span class="nx">forecasts</span>
+<span class="nx">forecast_product_udf</span> <span class="o">=</span> <span class="nx">pandas_udf</span><span class="p">(</span><span class="nx">forecast_product</span><span class="p">,</span> <span class="nx">pandas_udf_schema</span><span class="p">,</span> <span class="nx">PandasUDFType</span><span class="p">.</span><span class="nx">GROUPED_MAP</span><span class="p">)</span>
+
+<span class="err">#</span> <span class="nx">Apply</span> <span class="nx">prophet</span>
+<span class="nx">prophet_fc_traintest</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">prep_prophet_table</span><span class="p">(</span><span class="nx">trans_pre</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">groupby</span><span class="p">(</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">forecast_product_udf</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/prophet/prophet_result.png"></p>
 <h1>Disadvantage</h1>
-<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. F</p>
+<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. </p>
 <h1>Disadvantage Neural Prophet</h1>
 <p>It is not possible to add regressores for which we don't have future values</p>
         </section>
