@@ -194,8 +194,9 @@ The vertical lines are where the changepoints are defined:</p>
   <span class="p">)</span>
 
   <span class="k">return</span> <span class="nx">prophet_df</span>
+</code></pre></div>
 
-<span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">,</span> <span class="nx">starttestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">endtestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">)</span><span class="o">:</span>
+<div class="highlight"><pre><span></span><code><span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">,</span> <span class="nx">starttestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">endtestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">)</span><span class="o">:</span>
   <span class="nx">m_reg</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span>
     <span class="nx">seasonality_prior_scale</span> <span class="o">=</span> <span class="mf">7</span><span class="p">,</span> 
     <span class="nx">changepoint_prior_scale</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> 
@@ -230,19 +231,21 @@ The vertical lines are where the changepoints are defined:</p>
   <span class="k">return</span> <span class="nx">out_df_reg</span>
 </code></pre></div>
 
-<p>How can you use this function:</p>
-<div class="highlight"><pre><span></span><code><span class="err">#</span> <span class="nx">defines</span> <span class="nx">udf</span> <span class="nx">schemas</span> <span class="nx">and</span> <span class="nx">preps</span> <span class="nx">table</span> <span class="k">for</span> <span class="nx">prophet</span> <span class="nx">formatting</span>
-<span class="nx">grab_cols</span> <span class="o">=</span> <span class="nx">regressors</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;trend&#39;</span><span class="p">,</span><span class="s1">&#39;yearly&#39;</span><span class="p">,</span><span class="s1">&#39;weekly&#39;</span><span class="p">]</span>
-<span class="nx">grab_cols_reg</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_reg_&#39;</span> <span class="o">+</span> <span class="nx">reg</span> <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="p">]</span> <span class="err">#</span> <span class="nx">output</span> <span class="nx">names</span> <span class="k">for</span> <span class="nx">used</span> <span class="nx">regreggors</span><span class="p">,</span> <span class="nx">so</span> <span class="nx">they</span> <span class="nx">are</span> <span class="nx">not</span> <span class="nx">the</span> <span class="nx">same</span> <span class="kr">as</span> <span class="nx">input</span> <span class="nx">column</span> <span class="nx">name</span>
+<p>How can you use this function:
+-  defines udf schemas and preps table for prophet formatting</p>
+<div class="highlight"><pre><span></span><code><span class="nx">grab_cols</span> <span class="o">=</span> <span class="nx">regressors</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;trend&#39;</span><span class="p">,</span><span class="s1">&#39;yearly&#39;</span><span class="p">,</span><span class="s1">&#39;weekly&#39;</span><span class="p">]</span>
+<span class="nx">grab_cols_reg</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_reg_&#39;</span> <span class="o">+</span> <span class="nx">reg</span> <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="p">]</span> 
 <span class="nx">regressor_schema</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">.</span><span class="nx">join</span><span class="p">([</span><span class="s1">&#39;{} float&#39;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="k">for</span> <span class="nx">x</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="p">])</span>
 
 
 <span class="nx">pandas_udf_schema</span> <span class="o">=</span> <span class="s1">&#39;StoreNbr int, RunDate date, ds date, yhat float, PredSales float,&#39;</span> <span class="o">+</span> <span class="nx">regressor_schema</span> 
+</code></pre></div>
 
-<span class="err">#</span> <span class="nx">makes</span> <span class="nx">partitioning</span> <span class="nx">and</span> <span class="nx">runs</span> <span class="nx">item</span> <span class="nx">forecasts</span>
-<span class="nx">forecast_product_udf</span> <span class="o">=</span> <span class="nx">pandas_udf</span><span class="p">(</span><span class="nx">forecast_product</span><span class="p">,</span> <span class="nx">pandas_udf_schema</span><span class="p">,</span> <span class="nx">PandasUDFType</span><span class="p">.</span><span class="nx">GROUPED_MAP</span><span class="p">)</span>
+<ul>
+<li>make partitioning and runs item forecasts, then apply prophet</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nx">forecast_product_udf</span> <span class="o">=</span> <span class="nx">pandas_udf</span><span class="p">(</span><span class="nx">forecast_product</span><span class="p">,</span> <span class="nx">pandas_udf_schema</span><span class="p">,</span> <span class="nx">PandasUDFType</span><span class="p">.</span><span class="nx">GROUPED_MAP</span><span class="p">)</span>
 
-<span class="err">#</span> <span class="nx">Apply</span> <span class="nx">prophet</span>
 <span class="nx">prophet_fc_traintest</span> <span class="o">=</span> <span class="p">(</span>
   <span class="nx">prep_prophet_table</span><span class="p">(</span><span class="nx">trans_pre</span><span class="p">)</span>
   <span class="p">.</span><span class="nx">groupby</span><span class="p">(</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">)</span>
