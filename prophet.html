@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Prophet and Neural Prophet &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2021-01-14" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Prophet and Neural Prophet"/>
+    <meta property="og:description" content="Prophet &amp; Neural Prophet"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/prophet.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Prophet and Neural Prophet">
+    <meta name="twitter:description" content="Prophet &amp; Neural Prophet">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/prophet.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Prophet and Neural Prophet</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2021-01-14T15:20:00+01:00">Thu 14 January 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/timeseries.html" title="All articles with Timeseries tag">#Timeseries</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/intro.html" title="All articles with Intro tag">#Intro</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/trend.html" title="All articles with Trend tag">#Trend</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/noise.html" title="All articles with Noise tag">#Noise</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/seasonality.html" title="All articles with Seasonality tag">#Seasonality</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <p>Prophet is a procedure released by Facebook for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects. Prophet (2017) is the predecessor to NeuralProphet (2020) — the latter combines the Prophet model with deep learning.</p>
+<h1>Prophet</h1>
+<p>According to Facebook, Prophet offers a straightforward way to create a ‘reasonable and accurate forecast’
+The Prophet procedure is an additive regression model with four main components:
+— a piecewise linear logistic growth curve trend
+- a yearly seasonal component modelled using Fourier series
+- a weekly seasonal component created using dummy variables
+- a user-provided list of important holidays.</p>
+<!-- # Trend
+
+# Seasonality -->
+
+<h1>Trend Changepoints</h1>
+<p>Changepoints are the points in time where the rate is changed. This can be due to a different marketing strategy or opening a new distribution centre for example. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series.
+The vertical lines are where the changepoints are defined:</p>
+<p><img src="/images/prophet/changepoints" alt="drawing" width="400"/></p>
+<p>Within that 80% 12 changepoints are uniformily selected:
+<img src="/images/prophet/changepoints_select" alt="drawing" width="400"/></p>
+<ul>
+<li><code>n_changepoints</code> : You can specify how many changepoints you want to be selected, however you can better tune this with adding regularization.</li>
+<li><code>changepoint_range</code>: This is to specify how big the range should be of with Prophet will place the n changepoints. Default is set to 0.80. Which means that the n changepoint will be placed in the first 80% of the time series. This 80% is chosen to avoid overfitting.</li>
+<li><code>changepoint.prior.scale</code>: If the trend changes are being overfit (too much flexibility) or underfit (not enough flexibility), you can adjust the strength of the sparse prior. Default is set to 0.05, increasing will lead to more flexibility.</li>
+</ul>
+<p>You are also able to specify changepoints yourself, for example if you know specific timestamps on which you expect a rate change or if Prophet missed a changepoint or overfits on the data. You can do this by giving Prophet a list of changepoint to the model:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">changepoints</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;2019-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-01-01&#39;</span><span class="p">])</span>
+<span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
+<span class="nx">fig</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">plot</span><span class="p">(</span><span class="nx">forecast</span><span class="p">)</span>
+</code></pre></div>
+
+<h1>Holidays</h1>
+<p>Below you can find an example to specify your holidays. Lower window ad upper window defines how much effect of this holiday you expect to last before and after the date of ds. </p>
+<div class="highlight"><pre><span></span><code><span class="nx">holidays</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nx">kerst</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">DataFrame</span><span class="p">({</span>
+  <span class="s1">&#39;holiday&#39;</span><span class="o">:</span> <span class="s1">&#39;kerst&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;ds&#39;</span><span class="o">:</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">([</span><span class="s1">&#39;2017-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2019-12-25&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2020-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-12-25&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2023-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-12-25&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;2026-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2027-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2028-12-25&#39;</span><span class="p">]),</span>
+  <span class="s1">&#39;lower_window&#39;</span><span class="o">:</span> <span class="o">-</span><span class="mf">3</span><span class="p">,</span>
+  <span class="s1">&#39;upper_window&#39;</span><span class="o">:</span> <span class="mf">1</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="nx">nye</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">DataFrame</span><span class="p">({</span>
+  <span class="s1">&#39;holiday&#39;</span><span class="o">:</span> <span class="s1">&#39;nye&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;ds&#39;</span><span class="o">:</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">([</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2019-12-31&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2020-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-12-31&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2023-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-12-31&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;2026-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2027-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2028-12-31&#39;</span><span class="p">]),</span>
+  <span class="s1">&#39;lower_window&#39;</span><span class="o">:</span> <span class="o">-</span><span class="mf">1</span><span class="p">,</span>
+  <span class="s1">&#39;upper_window&#39;</span><span class="o">:</span> <span class="mf">1</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="nx">holidays</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">concat</span><span class="p">((</span><span class="nx">kerst</span><span class="p">,</span> <span class="nx">nye</span><span class="p">))</span>
+</code></pre></div>
+
+<p><img src="/images/prophet/holidays" alt="drawing" width="400"/></p>
+<p>After the holidays are specified, you can give the holidays to your Prophet model as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">holidays</span><span class="o">=</span><span class="nx">holidays</span><span class="p">)</span>
+<span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
+</code></pre></div>
+
+<h1>Disadvantage</h1>
+<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. F</p>
+<h1>Disadvantage Neural Prophet</h1>
+<p>It is not possible to add regressores for which we don't have future values</p>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/prophet.html&amp;t=Mariska%20van%20Willigen%3A%20Prophet%20and%20Neural%20Prophet" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html&amp;text=Mariska%20van%20Willigen%3A%20Prophet%20and%20Neural%20Prophet" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
