@@ -121,8 +121,8 @@ The Prophet procedure is an additive regression model with four main components:
 <p>Changepoints are the points in time where the rate is changed. This can be due to a different marketing strategy or opening a new distribution centre for example. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series.
 The vertical lines are where the changepoints are defined:</p>
 <p><img alt="" src="/images/prophet/changepoints.png"></p>
-<p>Within that 80% 12 changepoints are uniformily selected:
-<img alt="" src="images/prophet/changepoints_select.png"></p>
+<p>Within that 80% 12 changepoints are uniformily selected:</p>
+<p><img alt="" src="/images/prophet/changepoints_select.png"></p>
 <ul>
 <li><code>n_changepoints</code> : You can specify how many changepoints you want to be selected, however you can better tune this with adding regularization.</li>
 <li><code>changepoint_range</code>: This is to specify how big the range should be of with Prophet will place the n changepoints. Default is set to 0.80. Which means that the n changepoint will be placed in the first 80% of the time series. This 80% is chosen to avoid overfitting.</li>
