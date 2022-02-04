@@ -249,7 +249,7 @@ The vertical lines are where the changepoints are defined:</p>
 <span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="" src="/images/prophet/prophet_result.png"></p>
+<p><img alt="" src="/images/prophet/results.png"></p>
 <h1>Disadvantage</h1>
 <p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. </p>
 <p>Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
