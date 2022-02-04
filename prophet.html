@@ -106,6 +106,7 @@
       <div class="col-main w3-container">
         <section id="content">
           <p>Prophet is a procedure released by Facebook for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects. Prophet (2017) is the predecessor to NeuralProphet (2020) — the latter combines the Prophet model with deep learning.</p>
+<p><img alt="" src="/images/prophet/P_logo.png"></p>
 <h1>Prophet</h1>
 <p>According to Facebook, Prophet offers a straightforward way to create a ‘reasonable and accurate forecast’
 The Prophet procedure is an additive regression model with four main components:
@@ -257,6 +258,7 @@ The vertical lines are where the changepoints are defined:</p>
 <p><img alt="" src="/images/prophet/prophet_result.png"></p>
 <h1>Disadvantage</h1>
 <p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
+<p><img alt="" src="/images/prophet/NP_logo.png"></p>
 <h1>Neural Prophet</h1>
 <p>Prophet is a quite easy and understandable tool to predict time series. However, performance is not (yet) very good. Therefore NeuralProphet is introduced. A less explainable model, but with on average a higher performance. In short: NeuralProphet = Neural Networks + Prophet. The main goal is to gain efficiency while limiting the loss of interpretability. NeuralProphet uses auto-regression and covariate modules as neural networks.</p>
 <p>The autoregressive (AR) process is probably the most used time series process to capture dependence over time among the random variables in a series.
