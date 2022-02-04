@@ -13,7 +13,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>Prophet and Neural Prophet &ndash; Mariska van Willigen</title>
+    <title>Prophet and NeuralProphet &ndash; Mariska van Willigen</title>
 
     <!-- Meta -->
     <meta name="description" content="Mariska van Willigen &ndash; ">
@@ -25,14 +25,14 @@
     <meta property="article:published_time" content="2022-01-16" />
 
     <meta property="og:type" content="article"/>
-    <meta property="og:title" content="Prophet and Neural Prophet"/>
-    <meta property="og:description" content="Prophet &amp; Neural Prophet"/>
+    <meta property="og:title" content="Prophet and NeuralProphet"/>
+    <meta property="og:description" content="Prophet &amp; NeuralProphet"/>
     <meta property="og:site_name" content="Mariska van Willigen" />
     <meta property="og:url" content="https://mariskavanwilligen.github.io/prophet.html"/>
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Prophet and Neural Prophet">
-    <meta name="twitter:description" content="Prophet &amp; Neural Prophet">
+    <meta name="twitter:title" content="Prophet and NeuralProphet">
+    <meta name="twitter:description" content="Prophet &amp; NeuralProphet">
     <meta name="twitter:url" content="https://mariskavanwilligen.github.io/prophet.html">
 
     <!-- Feed -->
@@ -75,7 +75,7 @@
 
     <article>
       <header class="w3-container col-main">
-        <h1>Prophet and Neural Prophet</h1>
+        <h1>Prophet and NeuralProphet</h1>
         <div class="post-info">
           <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
             <span><time datetime="2022-01-16T15:20:00+01:00">Sun 16 January 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
@@ -164,7 +164,7 @@ The vertical lines are where the changepoints are defined:</p>
 <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
 </code></pre></div>
 
-<h1>Example</h1>
+<h1>How to use Prophet</h1>
 <p>Make sure in the preprocessing of youre data that the time column is defined as <strong>ds</strong> (for example date). And the dependent variable as <strong>y</strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">regressors</span> <span class="o">=</span> <span class="p">[</span>
   <span class="s1">&#39;LogTempAvg&#39;</span><span class="p">,</span>
@@ -256,9 +256,34 @@ The vertical lines are where the changepoints are defined:</p>
 
 <p><img alt="" src="/images/prophet/prophet_result.png"></p>
 <h1>Disadvantage</h1>
-<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. </p>
-<h1>Disadvantage Neural Prophet</h1>
-<p>It is not possible to add regressores for which we don't have future values</p>
+<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
+<h1>Neural Prophet</h1>
+<p>Prophet is a quite easy and understandable tool to predict time series. However, performance is not (yet) very good. Therefore NeuralProphet is introduced. A less explainable model, but with on average a higher performance. In short: NeuralProphet = Neural Networks + Prophet. The main goal is to gain efficiency while limiting the loss of interpretability. NeuralProphet uses auto-regression and covariate modules as neural networks.</p>
+<p>The autoregressive (AR) process is probably the most used time series process to capture dependence over time among the random variables in a series.
+By default, the neural network makes use of the simplest existing architecture: no intermediate layer, no activation function, only p inputs connected to h outputs</p>
+<h1>Example Neural Prophet</h1>
+<div class="highlight"><pre><span></span><code><span class="nx">def</span> <span class="nx">forecast_n_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">m_reg</span> <span class="o">=</span> <span class="nx">NeuralProphet</span><span class="p">()</span>
+
+  <span class="nx">starttestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="s2">&quot;2019-11-11&quot;</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+  <span class="nx">endtestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+
+  <span class="nx">df_reg</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;ds &lt; @starttestdate&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]],</span> <span class="nx">freq</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="nx">epochs</span><span class="o">=</span><span class="mf">5000</span><span class="p">)</span>
+
+  <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]].</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
+
+
+  <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;yhat1&#39;</span><span class="p">])</span>
+
+  <span class="nx">out_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span><span class="s1">&#39;yhat1&#39;</span><span class="p">,</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]].</span><span class="nx">assign</span><span class="p">(</span><span class="nx">RunDate</span> <span class="o">=</span> <span class="nx">rundate</span><span class="p">).</span><span class="nx">assign</span><span class="p">(</span><span class="nx">StoreNbr</span> <span class="o">=</span> <span class="nx">storenbr</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">out_df_reg</span>
+</code></pre></div>
         </section>
 
         <br><br><br>
@@ -280,10 +305,10 @@ The vertical lines are where the changepoints are defined:</p>
 
           <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
           <div id="share" class="share">
-            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/prophet.html&amp;t=Mariska%20van%20Willigen%3A%20Prophet%20and%20Neural%20Prophet" target="_blank" class="w3-btn w3-indigo">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/prophet.html&amp;t=Mariska%20van%20Willigen%3A%20Prophet%20and%20NeuralProphet" target="_blank" class="w3-btn w3-indigo">
               <i class="fa fa-facebook"></i> <span>Facebook</span>
             </a>
-            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html&amp;text=Mariska%20van%20Willigen%3A%20Prophet%20and%20Neural%20Prophet" target="_blank" class="w3-btn w3-blue">
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html&amp;text=Mariska%20van%20Willigen%3A%20Prophet%20and%20NeuralProphet" target="_blank" class="w3-btn w3-blue">
               <i class="fa fa-twitter"></i> <span>Twitter</span>
             </a>
             <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
