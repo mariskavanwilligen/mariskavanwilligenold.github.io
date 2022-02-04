@@ -212,8 +212,8 @@ The vertical lines are where the changepoints are defined:</p>
   <span class="p">)</span>
   <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">regressors</span><span class="o">:</span>
        <span class="nx">m_reg</span><span class="p">.</span><span class="nx">add_regressor</span><span class="p">(</span><span class="nx">reg</span><span class="p">)</span>
-  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">)</span>
 
+  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">)</span>
   <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
 
   <span class="k">for</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="o">:</span> <span class="err">#</span> <span class="nx">rename</span> <span class="nx">columns</span> <span class="k">for</span> <span class="nx">output</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">_reg_</span> 
@@ -226,19 +226,14 @@ The vertical lines are where the changepoints are defined:</p>
   <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
   <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
   <span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;yhat&#39;</span><span class="p">])</span>
-
   <span class="nx">out_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span><span class="s1">&#39;yhat&#39;</span><span class="p">,</span><span class="s1">&#39;PredSales&#39;</span><span class="p">,</span> <span class="o">*</span><span class="nx">grab_cols_reg</span><span class="p">]].</span><span class="nx">assign</span><span class="p">(</span><span class="nx">RunDate</span> <span class="o">=</span> <span class="nx">rundate</span><span class="p">).</span><span class="nx">assign</span><span class="p">(</span><span class="nx">StoreNbr</span> <span class="o">=</span> <span class="nx">storenbr</span><span class="p">)</span>
-
   <span class="k">return</span> <span class="nx">out_df_reg</span>
 </code></pre></div>
 
-<p>How can you use this function:
--  defines udf schemas and preps table for prophet formatting</p>
+<p>How can you use this function:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">grab_cols</span> <span class="o">=</span> <span class="nx">regressors</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;trend&#39;</span><span class="p">,</span><span class="s1">&#39;yearly&#39;</span><span class="p">,</span><span class="s1">&#39;weekly&#39;</span><span class="p">]</span>
 <span class="nx">grab_cols_reg</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_reg_&#39;</span> <span class="o">+</span> <span class="nx">reg</span> <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="p">]</span> 
 <span class="nx">regressor_schema</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">.</span><span class="nx">join</span><span class="p">([</span><span class="s1">&#39;{} float&#39;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="k">for</span> <span class="nx">x</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="p">])</span>
-
-
 <span class="nx">pandas_udf_schema</span> <span class="o">=</span> <span class="s1">&#39;StoreNbr int, RunDate date, ds date, yhat float, PredSales float,&#39;</span> <span class="o">+</span> <span class="nx">regressor_schema</span> 
 </code></pre></div>
 
@@ -257,7 +252,8 @@ The vertical lines are where the changepoints are defined:</p>
 
 <p><img alt="" src="/images/prophet/prophet_result.png"></p>
 <h1>Disadvantage</h1>
-<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
+<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. </p>
+<p>Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
 <p><img alt="" src="/images/prophet/NP_logo.png"></p>
 <h1>Neural Prophet</h1>
 <p>Prophet is a quite easy and understandable tool to predict time series. However, performance is not (yet) very good. Therefore NeuralProphet is introduced. A less explainable model, but with on average a higher performance. In short: NeuralProphet = Neural Networks + Prophet. The main goal is to gain efficiency while limiting the loss of interpretability. NeuralProphet uses auto-regression and covariate modules as neural networks.</p>
@@ -276,7 +272,6 @@ By default, the neural network makes use of the simplest existing architecture: 
   <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]],</span> <span class="nx">freq</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="nx">epochs</span><span class="o">=</span><span class="mf">5000</span><span class="p">)</span>
 
   <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]].</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
-
 
   <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
   <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
