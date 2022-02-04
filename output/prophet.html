@@ -159,7 +159,6 @@ The vertical lines are where the changepoints are defined:</p>
 <span class="nx">holidays</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">concat</span><span class="p">((</span><span class="nx">kerst</span><span class="p">,</span> <span class="nx">nye</span><span class="p">))</span>
 </code></pre></div>
 
-<p><img alt="" src="/images/prophet/holidays.png =100x20"></p>
 <p>After the holidays are specified, you can give the holidays to your Prophet model as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">holidays</span><span class="o">=</span><span class="nx">holidays</span><span class="p">)</span>
 <span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
