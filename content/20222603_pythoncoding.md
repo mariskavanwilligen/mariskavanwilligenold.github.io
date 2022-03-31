@@ -3,7 +3,7 @@ Date: 2022-03-26 10:20
 Tags: Python, coding, SOLID
 Slug: 
 Authors: Mariska van Willigen
-Summary: SOLID Principles
+Summary: The five SOLID Principles shortly explained with examples
 
 # SOLID principles
 
