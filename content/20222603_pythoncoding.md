@@ -464,9 +464,8 @@ class PaypalPaymentProcessor(PaymentProcessor):
         order.status = "paid"
 ``` 
 
-*
-### Reference: 
-- ArjanCodes about SOLID principles: https://www.youtube.com/watch?v=pTB30aXS77U 
-- CodeExamples from: geeksforgeeks.org
 
-*
+### Reference: 
+- *ArjanCodes about SOLID principles: https://www.youtube.com/watch?v=pTB30aXS77U*
+- *CodeExamples from: geeksforgeeks.org*
+
