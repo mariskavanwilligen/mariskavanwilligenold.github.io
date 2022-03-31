@@ -1,5 +1,5 @@
-Title: Python coding
-Date: 2022-03-04 10:20
+Title: SOLID Principles
+Date: 2022-03-26 10:20
 Tags: Python, coding, SOLID
 Slug: 
 Authors: Mariska van Willigen
