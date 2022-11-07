@@ -1,0 +1,77 @@
+Title: Dependency management & packaging with Poetry
+Date: 2022-08-19 9:14
+Tags: Poetry, Dependency Management, Packaging, Lock
+Slug: poetry
+Authors: Mariska van Willigen
+Summary: Poetry is a tool for dependency management and packaging in Python. It allows the user to set the libraries your project depends on and poetry will manage them for you.
+
+## 
+You start with making a pyproject.toml file, then you can start by adding the necessary packages and development packages by running the *poetry add* command. To lock all the versions of the installed dependencies, you can make a lock file. This lock file will be used everytime you run *poetry install* to look for the right versions. If you want to update these versions and resolve all the dependencies you have to run *poetry update* to update the current lock file. 
+## How to work with Poetry
+
+This command will help you create a pyproject.toml file interactively by prompting you to provide basic information about your package.
+
+It will interactively ask you to fill in the fields, while using some smart defaults.
+```
+poetry init
+```
+
+To add a package to install requirements:
+``` 
+    poetry add package-name
+    poetry add package-name -D # Adds a package as development dependency
+```
+
+To pin your dependencies in pyproject.toml file
+```
+    poetry lock
+```
+
+The install command reads the pyproject.toml file from the current project, resolves the dependencies, and installs them.
+If there is a poetry.lock file in the current directory, it will use the exact versions from there instead of resolving them. This ensures that everyone using the library will get the same versions of the dependencies.
+If there is no poetry.lock file, Poetry will create one after dependency resolution.
+```
+    poetry install
+    poetry install --no-dev # Don't install the development dependencies
+    poetry install --remove-untracked # Remove old dependencies no longer present in the lock file
+```
+
+In order to get the latest versions of the dependencies and to update the poetry.lock file, you should use the update command.
+```
+    poetry update
+```
+To run the tests:
+```
+    poetry run pytest
+```
+
+Remove a package:
+```
+    poetry remove package-name
+    poetry remove package-name -D # Remove a package from development dependencies
+```
+
+List of all the packages:
+```
+    poetry show
+    poetry show --no-dev # Only non development dependencies
+    poetry show --tree # List the dependencies as a tree
+    poetry show --l # Show latest version
+    poetry show -o # Show latest versions only for the packages that are outdated
+```
+
+Builds the source and wheels archives:
+```
+    poetry build
+    poetry build --format # Limit the format to either wheel or sdist
+```
+
+Check to pyproject.toml file:
+```
+    poetry check
+```
+
+Write a requirements.txt with poetry:
+```
+    poetry export --output requirements.txt
+```

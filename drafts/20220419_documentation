@@ -1,0 +1,82 @@
+Title: Documentation with sphinx
+Date: 2022-04-29 16:24
+Tags: Sphinx, Documentation, Structure, HTML, Docstrings
+Slug: sphinx
+Authors: Mariska van Willigen
+Summary: Sphinx is a tool to help with the creation of nice adn easy documention for your project
+
+
+Documentation will help the users of your code.
+Having documentation in your codebase is already good, but we can use Sphinx to make the documentation easier to write.
+
+## Docstrings
+1. one-line docstring — Use triple single quotes or triple-double quotes. both opening and closing quotes must be in the same line. This is the syntax, but the usage of the one-line docstring is to give a very brief of what modules, functions do. Especially for the modules. Because one-line docstring mostly used the top of the class to describe the class.
+2. multi-line docstring — Syntax difference from one-line docstring is that opening and closing quotes need not be in the same line. Actually, it will never happen due to the format of writing multi-line docstrings. Usually used to describe functions or methods.
+
+### <mark>Exercise 1: Sphinx </mark>
+
+Install sphinx, create a sub-directory ‘docs’ and run `sphinx-quickstart` inside the docs directory.
+
+Run:  
+```bash
+poetry add --dev sphinx
+mkdir docs
+cd docs
+poetry run sphinx-quickstart
+```
+Create an HTML version of the generated docs by running `make html` inside the docs directory. 
+
+Run:  
+```
+poetry run make html
+```
+
+Open the generated pages in your browser.
+
+The HTML pages are in _build/html.
+###  <mark>Exercise 2: Sphinx</mark>
+
+Change the theme to the ReadTheDocs theme:
+Run 
+```
+poetry add --dev sphinx-rtd-theme`
+```
+and extend `docs/conf.py` with: 
+```python
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon'
+]
+
+...
+
+html_theme = 'sphinx_rtd_theme'
+```
+
+Recreate the docs by running 
+```
+poetry run make clean
+poetry run make html
+```
+
+<!-- Add some API documentation using docstrings + autodoc. 
+```
+API
+---
+
+data module
+===========
+
+.. automodule:: animal_shelter.data
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+features module
+===============
+
+.. automodule:: animal_shelter.features
+   :members:
+   :undoc-members:
+   :show-inheritance:
+``` -->

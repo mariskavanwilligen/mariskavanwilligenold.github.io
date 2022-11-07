@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Shapley values &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2022-02-20" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Shapley values"/>
+    <meta property="og:description" content="Short introduction about Shapley value and how they can be used to explain machine learning models"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/shapley-value.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Shapley values">
+    <meta name="twitter:description" content="Short introduction about Shapley value and how they can be used to explain machine learning models">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/shapley-value.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Shapley values</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2022-02-20T15:20:00+01:00">Sun 20 February 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/shapley-value.html" title="All articles with Shapley Value tag">#Shapley value</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/machine-learning.html" title="All articles with Machine Learning tag">#Machine learning</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/game-theory.html" title="All articles with Game Theory tag">#Game Theory</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <h2>Introduction</h2>
+<p>The quality of your ML model is for a big part depended on the explainability of your model. Shapley values can help you to explain and interpret your model.
+Shapley values, a method from coalitional game theory, explain how fairly distributed the “payout” is among the features. With Shapley values you can explain the output based on the input.</p>
+<p>The Shapley value is the average marginal contribution of a feature value across all possible coalitions.
+The interpretation of the Shapley value for feature value j is: The value of the j-th feature contributed ϕj to the prediction of this particular instance compared to the average prediction for the dataset. The Shapley value works for both classification (if we are dealing with probabilities) and regression.</p>
+<blockquote>
+<p>Let's have a look!</p>
+</blockquote>
+<h2>Data Set Information:</h2>
+<p>The dataset is about Portuguese "Vinho Verde" wine. For more details, consult the reference [Cortez et al., 2009]. Due to privacy and logistic issues, only physicochemical (inputs) and sensory (the output) variables are available (e.g. there is no data about grape types, wine brand, wine selling price, etc.).</p>
+<p>This dataset can be viewed as classification or regression tasks. The classes are ordered and not balanced (e.g. there are many more normal wines than excellent or poor ones). Outlier detection algorithms could be used to detect the few excellent or poor wines. Also, we are not sure if all input variables are relevant. So it could be interesting to test feature selection methods.</p>
+<p>Attribute Information:</p>
+<p>Input variables (based on physicochemical tests) <em>(For more information, read [Cortez et al., 2009])</em>:</p>
+<ul>
+<li>
+<p>fixed acidity</p>
+</li>
+<li>
+<p>volatile acidity</p>
+</li>
+<li>
+<p>citric acid</p>
+</li>
+<li>
+<p>residual sugar</p>
+</li>
+<li>
+<p>chlorides</p>
+</li>
+<li>
+<p>free sulfur dioxide</p>
+</li>
+<li>
+<p>total sulfur dioxide</p>
+</li>
+<li>
+<p>density</p>
+</li>
+<li>
+<p>pH</p>
+</li>
+<li>
+<p>sulphates</p>
+</li>
+<li>
+<p>alcohol</p>
+</li>
+</ul>
+<p>Output variable (based on sensory data):
+- quality (score between 0 and 10)</p>
+<div class="highlight"><pre><span></span><code><span class="err">#</span> <span class="nx">Some</span> <span class="nx">code</span> <span class="nx">example</span>
+<span class="k">import</span> <span class="nx">pyspark</span>
+<span class="kr">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">context</span> <span class="k">import</span> <span class="nx">SparkContext</span>
+<span class="kr">from</span> <span class="nx">pyspark</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nx">session</span> <span class="k">import</span> <span class="nx">SparkSession</span>
+<span class="nx">sc</span> <span class="o">=</span> <span class="nx">SparkContext</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+<span class="nx">spark</span> <span class="o">=</span> <span class="nx">SparkSession</span><span class="p">(</span><span class="nx">sc</span><span class="p">)</span>
+
+<span class="nx">wine_data</span> <span class="o">=</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">read</span><span class="p">.</span><span class="nx">csv</span><span class="p">(</span><span class="s1">&#39;data/winequality-red.csv&#39;</span><span class="p">,</span> <span class="nx">header</span><span class="o">=</span><span class="nx">True</span><span class="p">,</span> <span class="nx">inferSchema</span><span class="o">=</span><span class="nx">True</span><span class="p">)</span>
+
+<span class="nx">wine_data</span><span class="p">.</span><span class="nx">limit</span><span class="p">(</span><span class="mf">5</span><span class="p">).</span><span class="nx">toPandas</span><span class="p">()</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/shapley/data_view.png"></p>
+<h2>Model fitting</h2>
+<div class="highlight"><pre><span></span><code><span class="nx">wine_data</span> <span class="o">=</span> <span class="nx">wine_data</span><span class="p">.</span><span class="nx">toPandas</span><span class="p">()</span>
+<span class="nx">y</span> <span class="o">=</span> <span class="nx">wine_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+<span class="nx">X</span> <span class="o">=</span> <span class="nx">wine_data</span><span class="p">[[</span><span class="s1">&#39;fixed acidity&#39;</span><span class="p">,</span> <span class="s1">&#39;volatile acidity&#39;</span><span class="p">,</span> <span class="s1">&#39;citric acid&#39;</span><span class="p">,</span> <span class="s1">&#39;residual sugar&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;chlorides&#39;</span><span class="p">,</span> <span class="s1">&#39;free sulfur dioxide&#39;</span><span class="p">,</span> <span class="s1">&#39;total sulfur dioxide&#39;</span><span class="p">,</span> <span class="s1">&#39;density&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;pH&#39;</span><span class="p">,</span> <span class="s1">&#39;sulphates&#39;</span><span class="p">,</span> <span class="s1">&#39;alcohol&#39;</span><span class="p">]]</span>
+
+<span class="err">#</span> <span class="nx">a</span> <span class="nx">simple</span> <span class="nx">linear</span> <span class="nx">model</span>
+<span class="nx">model</span> <span class="o">=</span> <span class="nx">sklearn</span><span class="p">.</span><span class="nx">linear_model</span><span class="p">.</span><span class="nx">LinearRegression</span><span class="p">()</span>
+<span class="nx">model</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">X</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nx">shap</span>
+<span class="nx">shap_values</span> <span class="o">=</span> <span class="nx">shap</span><span class="p">.</span><span class="nx">TreeExplainer</span><span class="p">(</span><span class="nx">model</span><span class="p">).</span><span class="nx">shap_values</span><span class="p">(</span><span class="nx">X</span><span class="p">)</span>
+<span class="nx">shap</span><span class="p">.</span><span class="nx">summary_plot</span><span class="p">(</span><span class="nx">shap_values</span><span class="p">,</span> <span class="nx">X</span><span class="p">,</span> <span class="nx">plot_type</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/shapley/tree.png"></p>
+<p>The SHAP value plot can further show the positive and negative relationships of the predictors with the target variable. </p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nx">matplotlib</span><span class="p">.</span><span class="nx">pyplot</span> <span class="kr">as</span> <span class="nx">plt</span>
+<span class="nx">f</span> <span class="o">=</span> <span class="nx">plt</span><span class="p">.</span><span class="nx">figure</span><span class="p">()</span>
+<span class="nx">shap</span><span class="p">.</span><span class="nx">summary_plot</span><span class="p">(</span><span class="nx">shap_values</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/shapley/tree2.png"></p>
+<p>This plot is made of all the dots in the train data. It demonstrates the following information:
+Feature importance: Variables are ranked in descending order.</p>
+<ul>
+<li>
+<p><strong>Impact:</strong> The horizontal location shows whether the effect of that value is associated with a higher or lower prediction.</p>
+</li>
+<li>
+<p><strong>Original value:</strong> Color shows whether that variable is high (in red) or low (in blue) for that observation.</p>
+</li>
+<li>
+<p><strong>Correlation:</strong> A high level of the “alcohol” content has a high and positive impact on the quality rating. The “high” comes from the red color, and the “positive” impact is shown on the X-axis. Similarly, we will say the “volatile acidity” is negatively correlated with the target variable.</p>
+</li>
+</ul>
+<p>You may ask how to show a partial dependence plot. The partial dependence plot shows the marginal effect one or two features have on the predicted outcome of a machine learning model (J. H. Friedman 2001). It tells whether the relationship between the target and a feature is linear, monotonic or more complex. In order to create a dependence plot you do:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">shap</span><span class="p">.</span><span class="nx">dependence_plot</span><span class="p">(</span><span class="s1">&#39;alcohol&#39;</span><span class="p">,</span> <span class="nx">shap_values</span><span class="p">,</span> <span class="nx">X</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The function automatically includes another variable that your chosen variable interacts most with. The following plot shows there is an approximately linear and positive trend between “alcohol” and the target variable, and “alcohol” interacts with “sulphates” frequently:</p>
+<p><img alt="" src="/images/shapley/shap3.png"></p>
+<div class="highlight"><pre><span></span><code><span class="k">import</span> <span class="nx">numpy</span> <span class="kr">as</span> <span class="nx">np</span>
+
+<span class="err">#</span> <span class="nx">Get</span> <span class="nx">the</span> <span class="nx">predictions</span> <span class="nx">and</span> <span class="nx">put</span> <span class="nx">them</span> <span class="kd">with</span> <span class="nx">the</span> <span class="nx">test</span> <span class="nx">data</span><span class="p">.</span>
+<span class="nx">X_output</span> <span class="o">=</span> <span class="nx">y</span><span class="p">.</span><span class="nx">copy</span><span class="p">()</span>
+<span class="nx">X_output</span><span class="p">.</span><span class="nx">loc</span><span class="p">[</span><span class="o">:</span><span class="p">,</span><span class="s1">&#39;predict&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">model</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">X_output</span><span class="p">),</span><span class="mf">2</span><span class="p">)</span>
+
+<span class="err">#</span> <span class="nx">Randomly</span> <span class="nx">pick</span> <span class="nx">some</span> <span class="nx">observations</span>
+<span class="nx">random_picks</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">arange</span><span class="p">(</span><span class="mf">1</span><span class="p">,</span><span class="mf">330</span><span class="p">,</span><span class="mf">50</span><span class="p">)</span> <span class="err">#</span> <span class="nx">Every</span> <span class="mf">50</span> <span class="nx">rows</span>
+<span class="nx">S</span> <span class="o">=</span> <span class="nx">X_output</span><span class="p">.</span><span class="nx">iloc</span><span class="p">[</span><span class="nx">random_picks</span><span class="p">]</span>
+
+<span class="err">#</span> <span class="nx">Initialize</span> <span class="nx">your</span> <span class="nx">Jupyter</span> <span class="nx">notebook</span> <span class="kd">with</span> <span class="nx">initjs</span><span class="p">(),</span> <span class="nx">otherwise</span> <span class="nx">you</span> <span class="nx">will</span> <span class="nx">get</span> <span class="nx">an</span> <span class="nx">error</span> <span class="nx">message</span><span class="p">.</span>
+<span class="nx">shap</span><span class="p">.</span><span class="nx">initjs</span><span class="p">()</span>
+
+<span class="err">#</span> <span class="nx">Write</span> <span class="ow">in</span> <span class="nx">a</span> <span class="kd">function</span>
+<span class="nx">def</span> <span class="nx">shap_plot</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">explainerModel</span> <span class="o">=</span> <span class="nx">shap</span><span class="p">.</span><span class="nx">TreeExplainer</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span>
+    <span class="nx">shap_values_Model</span> <span class="o">=</span> <span class="nx">explainerModel</span><span class="p">.</span><span class="nx">shap_values</span><span class="p">(</span><span class="nx">S</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">=</span> <span class="nx">shap</span><span class="p">.</span><span class="nx">force_plot</span><span class="p">(</span><span class="nx">explainerModel</span><span class="p">.</span><span class="nx">expected_value</span><span class="p">,</span> <span class="nx">shap_values_Model</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">S</span><span class="p">.</span><span class="nx">iloc</span><span class="p">[[</span><span class="nx">j</span><span class="p">]])</span>
+    <span class="k">return</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+
+<span class="nx">shap_plot</span><span class="p">(</span><span class="mf">0</span><span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/shapley/shap_plot.png"></p>
+<p>This plot describes:</p>
+<ul>
+<li>
+<p><strong>The output value:</strong> is the prediction for that observation (the prediction of the first row in Table B is 6.20).</p>
+</li>
+<li>
+<p><strong>The base value:</strong> The original paper explains that the base value E(y_hat) is “the value that would be predicted if we did not know any features for the current output.” In other words, it is the mean prediction, or mean(yhat). You may wonder why it is 5.62. This is because the mean prediction of Y_test is 5.62. You can test it out by Y_test.mean() which produces 5.62.</p>
+</li>
+<li>
+<p><strong>Red/blue:</strong> Features that push the prediction higher (to the right) are shown in red, and those pushing the prediction lower are in blue.</p>
+</li>
+<li>
+<p><strong>Alcohol:</strong> has a positive impact on the quality rating. The alcohol content of this wine is 11.8 (as shown in the first row of Table B) which is higher than the average value 10.41. So it pushes the prediction to the right.</p>
+</li>
+<li>
+<p><strong>pH:</strong> has a negative impact on the quality rating. A lower than the average pH (=3.26 &lt; 3.30) drives the prediction to the right.
+Sulphates: is positively related to the quality rating. A lower than the average Sulphates (= 0.64 &lt; 0.65) pushes the prediction to the left.</p>
+</li>
+</ul>
+<p>Dataset retrieved from: <em>P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis. Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.</em></p>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/shapley-value.html&amp;t=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/shapley-value.html&amp;text=Mariska%20van%20Willigen%3A%20Shapley%20values" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/shapley-value.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>

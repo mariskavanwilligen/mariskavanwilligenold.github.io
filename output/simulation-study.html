@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SUBiNN Simulation Study &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2021-06-05" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="SUBiNN Simulation Study"/>
+    <meta property="og:description" content="A Simulation Study to Investigate the Feature Selection Performance of a Stacked Uni- and Bivariate Nearest Neighbors Classifier"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/simulation-study.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SUBiNN Simulation Study">
+    <meta name="twitter:description" content="A Simulation Study to Investigate the Feature Selection Performance of a Stacked Uni- and Bivariate Nearest Neighbors Classifier">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/simulation-study.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>SUBiNN Simulation Study</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2021-06-05T11:14:00+02:00">Sat 05 June 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/subinn.html" title="All articles with Subinn tag">#SUBINN</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/simulation-study.html" title="All articles with Simulation Study tag">#Simulation study</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/power.html" title="All articles with Power tag">#Power</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <h2>Simulation study to study SUBiNN model</h2>
+<p>SUBiNN is a Stacked Uni- and Bivariate Nearest Neighbors classifier with kNN classifiers as base-learners and a Lasso feature selection as meta-learner. The
+aim of this present research is to estimate the power, type I error and the false
+discovery rate of the SUBiNN model to find interactions and main effects in
+the data. </p>
+<p>See my previous post for more information about the SUBiNN model <a href="https://mariskavanwilligen.github.io/subinn-model.html">Click here!</a></p>
+<h2>Simulation study set-up</h2>
+<p>This simulation study makes use of a full factorial 3-by-3-by-2 design
+where systematically varied sample sizes and effect sizes are used in the data
+generating process. Additionally, varied number of neighbors k are used in the
+kNN classifiers.</p>
+<p><img alt="" src="/images/Thesis/Thesis4b.png"></p>
+<p>For each of the 100 replications, SUBiNN is fitted to a data set
+with 10 uniformly distributed features with one main effect and two interaction
+effects. The power, type I error and false discovery rate will be estimated to
+measure the feature selection performance in every condition. The stability of
+the results is examined in a follow-up study with one data set.</p>
+<p><img alt="" src="/images/Thesis/Thesis6.png"></p>
+<h2>Data generation process</h2>
+<p>For each replication, a new data set of 10 independent distributed
+features in the range -1 till +1 is generated with a specific sample size and effect size. With these features two interactions effects (X2-X3 and X5-X6) and
+one main effecg X7 are defined. The data generating process is given by:</p>
+<p><img alt="" src="/images/Thesis/formula.png"></p>
+<p>Function S returns a 1 when the statement is fullfilled and a -1 otherwise. With
+the probabilities, observations from a binominal distribution are sampled. The
+main effect of X7 is defined as a step function. The data points of X7 with a
+value between -1 and -0.5 or between 0 and 0.5 are returning a 1 by function S.
+All the other values of X7 are returning a -1.</p>
+<p>The two interaction effects can be described as Four Blocks and Gaussian
+ordination. These two interactions are nonlinear and described by Yuan et al.
+(2019). Additionally, the Gaussian ordination is also used in a simulation study
+by Gul et al. (2016). Both interactions are pure interactions in the sense that
+no linear regression model will be able to classify a data point correctly if there
+is one pure interaction effect and an outcome variable. The interactions are
+expected to be informative and not the linear main effects of the variables used
+in the interactions.</p>
+<p>The interactions before sampling from a binomial distribution are visualized
+in Figure below. The left plot shows the Four Blocks interaction effect between X2
+and X3 and the right plots shows the Gaussian ordination interaction effect
+between X5 and X6. The two different colors represent the two different classes
+of outcome vector y.</p>
+<p><img alt="" src="/images/Thesis/Thesis13.png"></p>
+<h2>Results</h2>
+<p>The results of the simulation study shows that a bigger effect size and sample
+size leads to an increased ability to identify the interaction and main effects.
+Furthermore, the different values of the number of neighbors k did not have a
+significant impact on the power. However, the number of neighbors did have an
+impact on the type I error, a higher number of neighbors will result in a lower
+type I error. Additionally, the interaction effects were overall easier identifiable
+by the SUBiNN model compared with the main effect. When looking specifically
+at the two interaction effects, the Four Blocks interaction had a higher estimated
+power than the Gaussian ordination.</p>
+<p>The high false discovery rates indicate that not all of the uninformative base-learners were filtered out. 
+Mainly base-learner X7 had a low estimated power
+and was often selected as an interaction effect (Figure 3d-i). Especially base-learners X5-X7 and X6-X7 
+were frequently selected by the model. It seems that
+the SUBiNN model occasionally tries to capture the information in bivariate
+pairs instead of univariate base-learners.</p>
+<p><img alt="" src="/images/Thesis/Thesis14.png">  </p>
+<p>From the heatmaps and the boxplots, it can be observed that a few uninformative base-learners are often selected by the model. A (N x P) predictor matrix
+X has P features and therefore R = (P + P(P * 1)=2) different base-learners
+with every possible uni- and bivariate combination of the features. The uninformative base-learners that were not filtered out often consist of two informative
+features or a combination of one informative feature and one uninformative
+feature. When looking on feature level, the model is able to filter out all the
+uninformative features. In the heatmaps (Figure 3d - 3i) a clear pattern is visible and features X2, X3, X5, X6 and X7 are correctly considered as important
+features. </p>
+<p>So to conclude, the model finds it difficult to filter out all the uninformative base-learners, but not to filter out all the uninformative features. 
+To filter out more uninformative base-learners, it might be useful to take a look at
+the median or mode of all the coeficients given by Lasso after repeated 10-fold
+cross validation. In the end, the number of positive median or mode coeficients
+can be counted. This will filter out more uninformative base-learners compared
+with one time 10-fold cross validation and converting the coeficients to zeros
+and ones to do a count.</p>
+<p><img alt="" src="/images/Thesis/Thesis12.png"></p>
+<h2>Conclusion</h2>
+<p>The results of this simulation study show that a bigger effect size and sample
+size leads to an increased ability to identify the interaction and main effects.</p>
+<p>Furthermore, the different values of neighbors did not have a significant impact on the power. Although, the number of neighbors did have an impact
+on the type I error, a higher number of neighbors will result in a lower type
+I error. In all the conditions, the false discovery rates are quite high, mean-
+ing that of all the selected base-learners, there are still a few uninformative
+base-learners selected.  </p>
+<p>Based on this simulation study, it is
+strongly recommended to have a sample size of at least 500 and the number
+of neighbors set to 10 or the square root of N with repeated cross-validation to identify main
+effects and interactions with a SUBiNN model.</p>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/simulation-study.html&amp;t=Mariska%20van%20Willigen%3A%20SUBiNN%20Simulation%20Study" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/simulation-study.html&amp;text=Mariska%20van%20Willigen%3A%20SUBiNN%20Simulation%20Study" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/simulation-study.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>

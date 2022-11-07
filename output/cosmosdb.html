@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Cosmos DB &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2022-03-04" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Cosmos DB"/>
+    <meta property="og:description" content="A overview about Cosmos DB"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/cosmosdb.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Cosmos DB">
+    <meta name="twitter:description" content="A overview about Cosmos DB">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/cosmosdb.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Cosmos DB</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2022-03-04T10:20:00+01:00">Fri 04 March 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/cosmos-db.html" title="All articles with Cosmos Db tag">#Cosmos DB</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/api.html" title="All articles with Api tag">#API</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/database.html" title="All articles with Database tag">#database</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/overview.html" title="All articles with Overview tag">#overview</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <p>Azure Cosmos DB is described by Azure as a fully managed fast NoSQL (non relational) database for modern app development with single-digit millisecond response times, and automatic and instant scalability, guarantee speed at any scale.
+Cosmos DB is easy to use and to manage, the management part is fully automated including updates and patching. The management part is also handeling the capacity, including cost-effective and automatic scaling options.</p>
+<p><img alt="" src="/images/cosmosdb_hier.png"></p>
+<h2>Relational Database</h2>
+<p>A relational database is a database which stores tha data in rows and columns.</p>
+<h2>Non relational Database</h2>
+<p>A non relational database is a database that does not stores the data in rows and columns but choices a storage model that is best suited on the data.</p>
+<h2>Vertical scaling</h2>
+<p>Also called scaling up or down, is where you increase or decrease computing power or databases as needed. In kubernetes you would define vertical scaling as adding compute.</p>
+<h2>Horizontal scaling</h2>
+<p>Also called scaling out or in, where you add more databases or divide your large database into smaller nodes, using a data partitioning approach called sharding, which can be managed faster and more easily across servers. In kubernetes you will define horizontal scaling as adding nodes.</p>
+<h2>Logical &amp; physical partitioning</h2>
+<p>Logical partitioning is logical groups acrossed items within a dataset and you can reference to these groups with a parition key, It gives information to a database engine where to look for the data. This partition key should be chosen carefully.<br>
+A Physical partition is an actual unit of storage, that physically sits in the regio that you define. Piece of hardware holding data.</p>
+<h2>Replications</h2>
+<p>Replications within a region and geo-replication outside of a region. Within a region data is replicated 4 times as redundancy measure, improving fault tolerance. Outside the region the data is replicated into any additional azure regions that are being selected, resulting in a higher availability. </p>
+<p>The partitioning and replications are making horizontal scaling possible, another plus is the flexible schema. </p>
+<h1>Consistency</h1>
+<p>Azure Cosmos DB is a globally distributed database system that allows you to read and write data from the local replicas of your database. You can configure your databases to be globally distributed and available in any of the Azure regions. To lower the latency, place the data close to where your users are. Choosing the required regions depends on the global reach of your application and where your users are located. Cosmos DB transparently replicates the data to all the regions associated with your Cosmos account. It provides a single system image of your globally distributed Azure Cosmos database and containers that your application can read and write to locally.</p>
+<p>With Azure Cosmos DB, you can add or remove the regions associated with your account at any time. Your application doesn't need to be paused or redeployed to add or remove a region.</p>
+<p><img alt="" src="/images/global_distribution.png"></p>
+<p>Distributed databases that rely on replication for high availability, low latency, or both, must make a fundamental tradeoff between the read consistency, availability and latency.
+The docs of azure Cosmos DB explain that Strong consistency may also suffer from reduced availability (during failures) because data cannot replicate and commit in every region. Eventual consistency offers higher availability and better performance, but it's more difficult to program applications because data may not be completely consistent across all regions.</p>
+<p><img alt="" src="/images/con.png"></p>
+<p>The choice of one of the different consistency is based on the tradeoff between availability, latency and throughput.
+latency means the time between a request and a response. Throughput is the amount of requested units (read, update, writes, delete, query, insert, upsert) we want to reserve for capacity. We provision 100 RU's per second.</p>
+<h2>Strong consistency</h2>
+<ul>
+<li>Local Minority reads</li>
+<li>Global Majority writes</li>
+</ul>
+<p>After data is written to a region, all the reads will get the most recent value. A client never sees an uncommitted or partial write.</p>
+<p><img alt="" src="/images/strong_con.png"></p>
+<h2>Bounded consistency</h2>
+<ul>
+<li>Local Minority reads</li>
+<li>Local Majority writes</li>
+</ul>
+<p>In bounded staleness consistency, the reads are guaranteed to honor the consistent-prefix guarantee.
+Read within the same region of the write read the most recent values. Regions outside the region of the write are reading the written data with a specific delay/lag.</p>
+<p><img alt="" src="/images/bounded_con.png"></p>
+<h2>Session consistency</h2>
+<ul>
+<li>Single replica reads</li>
+<li>Local Majority writes</li>
+</ul>
+<p>If the writer and the reader are in the same region and session, they both will read the same data at the same time. But a different user in a different region and session, receives tge dara later, but in same order as the writes.</p>
+<p>This is the most used consistency.</p>
+<p><img alt="" src="/images/session_con.png"></p>
+<h2>Consistency Prefix</h2>
+<ul>
+<li>Single replica reads</li>
+<li>Local Majority writes</li>
+</ul>
+<p>The reads in the same or different regions are reading the data in the same order, but maybe not all of them. If the write is [A. B, C], the reads can be [A], [A, B] or [A, B, C] for example. Never a changed order.
+<img alt="" src="/images/prefix_con.png"></p>
+<h2>Eventual consistency</h2>
+<ul>
+<li>Single replica reads</li>
+<li>Local Majority writes</li>
+</ul>
+<p>The weakest form of consistency, client may read values that are older that the ones that he have read before. No order is guaranteed.
+Examples are count, retweets or likes.</p>
+<p><img alt="" src="/images/eventual_con.png"></p>
+<h1>Availability</h1>
+<ul>
+<li><em>RTO</em>: Recovery Time Objective, the time between the beginning of an outrage impacting Cosmos DB and the recovery to full availability</li>
+<li><em>RPO</em>: Recovery Point Objective, indicate the time between the last write correctly restored and the time of the beginning of the outrage affecting Cosmos DB</li>
+</ul>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/cosmosdb.html&amp;t=Mariska%20van%20Willigen%3A%20Cosmos%20DB" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/cosmosdb.html&amp;text=Mariska%20van%20Willigen%3A%20Cosmos%20DB" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/cosmosdb.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
