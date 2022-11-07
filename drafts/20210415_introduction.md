@@ -8,7 +8,7 @@ Summary: Who am I?
 Illustration: sea.jpg
 
 ## Introduction
-HI EVERYONE!!!, I wil introduce myself here, blaa blaa blaa My name is Mariska and I might update this blog or maybe never and just make it for fun. 
+
 
 > Who knows?
 ``` js
@@ -22,3 +22,10 @@ if a == 'small cute dog' & b == 'Cheesefondue':
 ## Images
 
 ![Minion](https://octodex.github.com/images/minion.png)
+
+
+## What to learn
+- FastAPI
+- Docker
+- Kubernetes
+- logging
