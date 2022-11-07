@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Prophet and NeuralProphet &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2022-01-16" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Prophet and NeuralProphet"/>
+    <meta property="og:description" content="A short deepdive into Prophet &amp; NeuralProphet with an example to predict sales"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/prophet.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Prophet and NeuralProphet">
+    <meta name="twitter:description" content="A short deepdive into Prophet &amp; NeuralProphet with an example to predict sales">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/prophet.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Prophet and NeuralProphet</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2022-01-16T15:20:00+01:00">Sun 16 January 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/timeseries.html" title="All articles with Timeseries tag">#Timeseries</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/intro.html" title="All articles with Intro tag">#Intro</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/trend.html" title="All articles with Trend tag">#Trend</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/noise.html" title="All articles with Noise tag">#Noise</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/seasonality.html" title="All articles with Seasonality tag">#Seasonality</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <p>Prophet is a procedure released by Facebook for forecasting time series data based on an additive model where non-linear trends are fit with yearly, weekly, and daily seasonality, plus holiday effects. Prophet (2017) is the predecessor to NeuralProphet (2020) — the latter combines the Prophet model with deep learning.</p>
+<p><img alt="" src="/images/prophet/P_logo.png"></p>
+<h1>Prophet</h1>
+<p>According to Facebook, Prophet offers a straightforward way to create a ‘reasonable and accurate forecast’
+The Prophet procedure is an additive regression model with four main components:
+— a piecewise linear logistic growth curve trend
+- a yearly seasonal component modelled using Fourier series
+- a weekly seasonal component created using dummy variables
+- a user-provided list of important holidays.</p>
+<!-- # Trend
+
+# Seasonality -->
+
+<h1>Trend Changepoints</h1>
+<p>Changepoints are the points in time where the rate is changed. This can be due to a different marketing strategy or opening a new distribution centre for example. By default, Prophet specifies 25 potential changepoints which are uniformly placed in the first 80% of the time series.
+The vertical lines are where the changepoints are defined:</p>
+<p><img alt="" src="/images/prophet/changepoints.png"></p>
+<p>Within that 80% 12 changepoints are uniformily selected:</p>
+<p><img alt="" src="/images/prophet/changepoints_select.png"></p>
+<ul>
+<li><code>n_changepoints</code> : You can specify how many changepoints you want to be selected, however you can better tune this with adding regularization.</li>
+<li><code>changepoint_range</code>: This is to specify how big the range should be of with Prophet will place the n changepoints. Default is set to 0.80. Which means that the n changepoint will be placed in the first 80% of the time series. This 80% is chosen to avoid overfitting.</li>
+<li><code>changepoint.prior.scale</code>: If the trend changes are being overfit (too much flexibility) or underfit (not enough flexibility), you can adjust the strength of the sparse prior. Default is set to 0.05, increasing will lead to more flexibility.</li>
+</ul>
+<p>You are also able to specify changepoints yourself, for example if you know specific timestamps on which you expect a rate change or if Prophet missed a changepoint or overfits on the data. You can do this by giving Prophet a list of changepoint to the model:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">changepoints</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;2019-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-01-01&#39;</span><span class="p">])</span>
+<span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
+<span class="nx">fig</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">plot</span><span class="p">(</span><span class="nx">forecast</span><span class="p">)</span>
+</code></pre></div>
+
+<h1>Holidays</h1>
+<p>Below you can find an example to specify your holidays. Lower window ad upper window defines how much effect of this holiday you expect to last before and after the date of ds. </p>
+<div class="highlight"><pre><span></span><code><span class="nx">holidays</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nx">kerst</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">DataFrame</span><span class="p">({</span>
+  <span class="s1">&#39;holiday&#39;</span><span class="o">:</span> <span class="s1">&#39;kerst&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;ds&#39;</span><span class="o">:</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">([</span><span class="s1">&#39;2017-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2019-12-25&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2020-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-12-25&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2023-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-12-25&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;2026-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2027-12-25&#39;</span><span class="p">,</span> <span class="s1">&#39;2028-12-25&#39;</span><span class="p">]),</span>
+  <span class="s1">&#39;lower_window&#39;</span><span class="o">:</span> <span class="o">-</span><span class="mf">3</span><span class="p">,</span>
+  <span class="s1">&#39;upper_window&#39;</span><span class="o">:</span> <span class="mf">1</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="nx">nye</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">DataFrame</span><span class="p">({</span>
+  <span class="s1">&#39;holiday&#39;</span><span class="o">:</span> <span class="s1">&#39;nye&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;ds&#39;</span><span class="o">:</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">([</span><span class="s1">&#39;2017-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2018-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2019-12-31&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2020-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2021-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2022-12-31&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;2023-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2024-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2025-12-31&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;2026-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2027-12-31&#39;</span><span class="p">,</span> <span class="s1">&#39;2028-12-31&#39;</span><span class="p">]),</span>
+  <span class="s1">&#39;lower_window&#39;</span><span class="o">:</span> <span class="o">-</span><span class="mf">1</span><span class="p">,</span>
+  <span class="s1">&#39;upper_window&#39;</span><span class="o">:</span> <span class="mf">1</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="nx">holidays</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">concat</span><span class="p">((</span><span class="nx">kerst</span><span class="p">,</span> <span class="nx">nye</span><span class="p">))</span>
+</code></pre></div>
+
+<p>After the holidays are specified, you can give the holidays to your Prophet model as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">m</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span><span class="nx">holidays</span><span class="o">=</span><span class="nx">holidays</span><span class="p">)</span>
+<span class="nx">forecast</span> <span class="o">=</span> <span class="nx">m</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df</span><span class="p">).</span><span class="nx">predict</span><span class="p">(</span><span class="nx">future</span><span class="p">)</span>
+</code></pre></div>
+
+<h1>How to use Prophet</h1>
+<p>Make sure in the preprocessing of youre data that the time column is defined as <strong>ds</strong> (for example date). And the dependent variable as <strong>y</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">regressors</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">&#39;LogTempAvg&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;WeekDayNbr&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="nx">def</span> <span class="nx">prep_prophet_table</span><span class="p">(</span><span class="nx">df</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">prophet_df</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">df</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">))</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Sales&#39;</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">lit</span><span class="p">(</span><span class="nx">datetime</span><span class="p">.</span><span class="nx">now</span><span class="p">().</span><span class="nx">date</span><span class="p">()))</span> <span class="err">#</span> <span class="nx">identify</span> <span class="nx">maximum</span> <span class="nx">training</span> <span class="nx">point</span> <span class="nx">based</span> <span class="nx">on</span> <span class="nx">current</span> <span class="nx">date</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;TrainHistory&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">datediff</span><span class="p">(</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">),</span> <span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">))</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">7</span><span class="p">,</span> <span class="mf">1</span><span class="p">).</span><span class="nx">otherwise</span><span class="p">(</span><span class="mf">0</span><span class="p">))</span> <span class="err">#</span> <span class="nx">training</span> <span class="nx">indicator</span><span class="p">,</span> <span class="nx">one</span> <span class="nx">week</span> <span class="nx">before</span> <span class="nx">current</span> <span class="nx">day</span>
+    <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;LogTempAvg&#39;</span><span class="p">,</span> <span class="nx">F</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">F</span><span class="p">.</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;TempAvg&#39;</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nx">fillna</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="nx">subset</span> <span class="o">=</span> <span class="p">[</span>
+                         <span class="s1">&#39;Sales&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;LogTempAvg&#39;</span>
+                        <span class="p">])</span>
+
+    <span class="p">.</span><span class="nx">select</span><span class="p">(</span><span class="s1">&#39;RunDate&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ds&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Sales&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;TrainHistory&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+            <span class="o">*</span><span class="nx">regressors</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">orderBy</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">prophet_df</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="nx">def</span> <span class="nx">forecast_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">,</span> <span class="nx">starttestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">,</span> <span class="nx">endtestdate</span><span class="o">:</span> <span class="nx">str</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">m_reg</span> <span class="o">=</span> <span class="nx">Prophet</span><span class="p">(</span>
+    <span class="nx">seasonality_prior_scale</span> <span class="o">=</span> <span class="mf">7</span><span class="p">,</span> 
+    <span class="nx">changepoint_prior_scale</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> 
+    <span class="nx">uncertainty_samples</span><span class="o">=</span><span class="mf">0</span><span class="p">,</span> 
+    <span class="nx">holidays</span> <span class="o">=</span> <span class="nx">holidays</span><span class="p">)</span>
+
+  <span class="nx">starttestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="nx">starttestdate</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+  <span class="nx">endtestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="nx">endtestdate</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+
+  <span class="nx">df_reg</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;ds &lt; @starttestdate&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">regressors</span><span class="o">:</span>
+       <span class="nx">m_reg</span><span class="p">.</span><span class="nx">add_regressor</span><span class="p">(</span><span class="nx">reg</span><span class="p">)</span>
+
+  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">)</span>
+  <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
+
+  <span class="k">for</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="o">:</span> <span class="err">#</span> <span class="nx">rename</span> <span class="nx">columns</span> <span class="k">for</span> <span class="nx">output</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">_reg_</span> 
+        <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">.</span><span class="nx">rename</span><span class="p">(</span><span class="nx">columns</span> <span class="o">=</span> <span class="p">{</span><span class="nx">i</span><span class="o">:</span> <span class="s2">&quot;_reg_&quot;</span><span class="o">+</span><span class="nx">i</span><span class="p">})</span>
+
+  <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="o">:</span>
+    <span class="k">if</span> <span class="nx">not</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">fc_df_reg</span><span class="o">:</span>
+      <span class="nx">fc_df_reg</span><span class="p">[</span><span class="nx">reg</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+  <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;yhat&#39;</span><span class="p">])</span>
+  <span class="nx">out_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span><span class="s1">&#39;yhat&#39;</span><span class="p">,</span><span class="s1">&#39;PredSales&#39;</span><span class="p">,</span> <span class="o">*</span><span class="nx">grab_cols_reg</span><span class="p">]].</span><span class="nx">assign</span><span class="p">(</span><span class="nx">RunDate</span> <span class="o">=</span> <span class="nx">rundate</span><span class="p">).</span><span class="nx">assign</span><span class="p">(</span><span class="nx">StoreNbr</span> <span class="o">=</span> <span class="nx">storenbr</span><span class="p">)</span>
+  <span class="k">return</span> <span class="nx">out_df_reg</span>
+</code></pre></div>
+
+<p>How can you use this function:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">grab_cols</span> <span class="o">=</span> <span class="nx">regressors</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;trend&#39;</span><span class="p">,</span><span class="s1">&#39;yearly&#39;</span><span class="p">,</span><span class="s1">&#39;weekly&#39;</span><span class="p">]</span>
+<span class="nx">grab_cols_reg</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_reg_&#39;</span> <span class="o">+</span> <span class="nx">reg</span> <span class="k">for</span> <span class="nx">reg</span> <span class="ow">in</span> <span class="nx">grab_cols</span><span class="p">]</span> 
+<span class="nx">regressor_schema</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">.</span><span class="nx">join</span><span class="p">([</span><span class="s1">&#39;{} float&#39;</span><span class="p">.</span><span class="nx">format</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="k">for</span> <span class="nx">x</span> <span class="ow">in</span> <span class="nx">grab_cols_reg</span><span class="p">])</span>
+<span class="nx">pandas_udf_schema</span> <span class="o">=</span> <span class="s1">&#39;StoreNbr int, RunDate date, ds date, yhat float, PredSales float,&#39;</span> <span class="o">+</span> <span class="nx">regressor_schema</span> 
+</code></pre></div>
+
+<ul>
+<li>make partitioning and runs item forecasts, then apply prophet</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nx">forecast_product_udf</span> <span class="o">=</span> <span class="nx">pandas_udf</span><span class="p">(</span><span class="nx">forecast_product</span><span class="p">,</span> <span class="nx">pandas_udf_schema</span><span class="p">,</span> <span class="nx">PandasUDFType</span><span class="p">.</span><span class="nx">GROUPED_MAP</span><span class="p">)</span>
+
+<span class="nx">prophet_fc_traintest</span> <span class="o">=</span> <span class="p">(</span>
+  <span class="nx">prep_prophet_table</span><span class="p">(</span><span class="nx">trans_pre</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">groupby</span><span class="p">(</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">forecast_product_udf</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">withColumn</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span><span class="nx">col</span><span class="p">(</span><span class="s1">&#39;ds&#39;</span><span class="p">))</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="" src="/images/prophet/results.png"></p>
+<h1>Disadvantage</h1>
+<p>The challenge with Facebook Prophet is that it does not look for casual relationships between the past and the future. It simply finds the best curve to fit the data using a linear logistic curve component for the external regressor. Another major criticism against Prophet is that its underlying assumptions are simplistic and weak. </p>
+<p>Prophet is hard to extend because Prophet is built upon Stan. It uses Stan for optimization and/or sampling in order to fit a non-linear additive model and generate uncertainty intervals. NeuralProphet is built upon PyTorch with the use of standard deep learning models and therefore easier to be extended.</p>
+<p><img alt="" src="/images/prophet/NP_logo.png"></p>
+<h1>Neural Prophet</h1>
+<p>Prophet is a quite easy and understandable tool to predict time series. However, performance is not (yet) very good. Therefore NeuralProphet is introduced. A less explainable model, but with on average a higher performance. In short: NeuralProphet = Neural Networks + Prophet. The main goal is to gain efficiency while limiting the loss of interpretability. NeuralProphet uses auto-regression and covariate modules as neural networks.</p>
+<p>The autoregressive (AR) process is probably the most used time series process to capture dependence over time among the random variables in a series.
+By default, the neural network makes use of the simplest existing architecture: no intermediate layer, no activation function, only p inputs connected to h outputs</p>
+<h1>Example Neural Prophet</h1>
+<div class="highlight"><pre><span></span><code><span class="nx">def</span> <span class="nx">forecast_n_product</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">)</span><span class="o">:</span>
+  <span class="nx">m_reg</span> <span class="o">=</span> <span class="nx">NeuralProphet</span><span class="p">()</span>
+
+  <span class="nx">starttestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="s2">&quot;2019-11-11&quot;</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+  <span class="nx">endtestdate</span> <span class="o">=</span> <span class="nx">pd</span><span class="p">.</span><span class="nx">to_datetime</span><span class="p">(</span><span class="s2">&quot;2020-01-01&quot;</span><span class="p">).</span><span class="nx">date</span><span class="p">()</span>
+
+  <span class="nx">df_reg</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="nx">trans_prep</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;ds &lt; @starttestdate&#39;</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="nx">m_reg</span><span class="p">.</span><span class="nx">fit</span><span class="p">(</span><span class="nx">df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]],</span> <span class="nx">freq</span> <span class="o">=</span> <span class="s1">&#39;D&#39;</span><span class="p">,</span> <span class="nx">epochs</span><span class="o">=</span><span class="mf">5000</span><span class="p">)</span>
+
+  <span class="nx">fc_df_reg</span> <span class="o">=</span> <span class="nx">m_reg</span><span class="p">.</span><span class="nx">predict</span><span class="p">(</span><span class="nx">trans_prep</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]].</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;@starttestdate &lt;= ds  &amp; ds &lt; @endtestdate&#39;</span><span class="p">))</span>
+
+  <span class="nx">storenbr</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;StoreNbr&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">rundate</span> <span class="o">=</span> <span class="nx">trans_prep</span><span class="p">[</span><span class="s1">&#39;RunDate&#39;</span><span class="p">].</span><span class="nx">values</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+  <span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nx">np</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="nx">fc_df_reg</span><span class="p">[</span><span class="s1">&#39;yhat1&#39;</span><span class="p">])</span>
+
+  <span class="nx">out_df_reg</span> <span class="o">=</span> <span class="nx">fc_df_reg</span><span class="p">[[</span><span class="s1">&#39;ds&#39;</span><span class="p">,</span><span class="s1">&#39;yhat1&#39;</span><span class="p">,</span><span class="s1">&#39;PredSales&#39;</span><span class="p">]].</span><span class="nx">assign</span><span class="p">(</span><span class="nx">RunDate</span> <span class="o">=</span> <span class="nx">rundate</span><span class="p">).</span><span class="nx">assign</span><span class="p">(</span><span class="nx">StoreNbr</span> <span class="o">=</span> <span class="nx">storenbr</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="nx">out_df_reg</span>
+</code></pre></div>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/prophet.html&amp;t=Mariska%20van%20Willigen%3A%20Prophet%20and%20NeuralProphet" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html&amp;text=Mariska%20van%20Willigen%3A%20Prophet%20and%20NeuralProphet" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/prophet.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>SOLID Principles &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2022-03-26" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="SOLID Principles"/>
+    <meta property="og:description" content="The five SOLID Principles shortly explained with examples"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/solid-principles.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="SOLID Principles">
+    <meta name="twitter:description" content="The five SOLID Principles shortly explained with examples">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/solid-principles.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>SOLID Principles</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2022-03-26T10:20:00+01:00">Sat 26 March 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/python.html" title="All articles with Python tag">#Python</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/coding.html" title="All articles with Coding tag">#coding</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/solid.html" title="All articles with Solid tag">#SOLID</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <h1>SOLID principles</h1>
+<p>The principle of SOLID coding is an acronym originated by Robert C. Martin, and it stands for five different conventions of coding.
+If you follow, these principles you can improve the reliability of your code by working on its structure and its logical consistency.</p>
+<p>The SOLID principles are:</p>
+<ol>
+<li>The Single-Responsibility Principle (SRP)</li>
+<li>The Open-Closed Principle (OCP)</li>
+<li>The Liskov Substitution Principle (LSP)</li>
+<li>The Interface Segregation Principle (ISP)</li>
+<li>The Dependency inversion Principle (DIP)</li>
+</ol>
+<blockquote>
+<p>Let's go have a look at each one of them!</p>
+</blockquote>
+<h2>The Single-Responsibility Principle</h2>
+<p>Classes and methods can only do a single thing. A class should not have multiple responsibilities (example: paying should not be part of class Order but the class PaymentProcessor).</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">AlbertHeijnOrder</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">products</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;open&quot;</span>
+
+    <span class="nx">def</span> <span class="nx">add_products</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">nasanbr</span><span class="p">,</span> <span class="nx">price</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">products</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">nasanbr</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">price</span><span class="p">)</span>
+
+    <span class="nx">def</span> <span class="nx">total_price</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">total</span> <span class="o">=</span> <span class="mf">0</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">range</span><span class="p">(</span><span class="nx">len</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">))</span><span class="o">:</span>
+            <span class="nx">total</span> <span class="o">+=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">quantities</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">*</span> <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nx">total</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">payment_type</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">payment_type</span> <span class="o">==</span> <span class="s2">&quot;debit&quot;</span><span class="o">:</span>
+            <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing debit payment type&quot;</span><span class="p">)</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+        <span class="nx">elif</span> <span class="nx">payment_type</span> <span class="o">==</span> <span class="s2">&quot;credit&quot;</span><span class="o">:</span>
+            <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+            <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {security_code}&quot;</span><span class="p">)</span>
+            <span class="nx">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+        <span class="k">else</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Unknown payment type: {payment_type}&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>So if we let each class only do one thing, we can rewrite this as:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">AlbertHeijnOrder</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">products</span><span class="o">=</span> <span class="p">[]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;open&quot;</span>
+
+    <span class="nx">def</span> <span class="nx">add_products</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">nasanbr</span><span class="p">,</span> <span class="nx">quantity</span><span class="p">,</span> <span class="nx">price</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">products</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">nasanbr</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">price</span><span class="p">)</span>
+
+    <span class="nx">def</span> <span class="nx">total_price</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">total</span> <span class="o">=</span> <span class="mf">0</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="ow">in</span> <span class="nx">range</span><span class="p">(</span><span class="nx">len</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">))</span><span class="o">:</span>
+            <span class="nx">total</span> <span class="o">+=</span> <span class="nx">self</span><span class="p">.</span><span class="nx">quantities</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">*</span> <span class="nx">self</span><span class="p">.</span><span class="nx">prices</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nx">total</span>
+
+<span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">pay_debit</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing debit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+    <span class="nx">def</span> <span class="nx">pay_credit</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<h2>The Open-Closed Principle</h2>
+<p>Extend the code with new functionality, but don't need to change all the existing code.
+Create a structure of classes and subclasses where you can add code and functionality, but not changing much of the existent code.
+You can do this by adding <strong>abstract methods</strong> for example. </p>
+<h3>Abstract Method example</h3>
+<p>Below you can find an example of an abstract method in the abstract class <strong>Polygon</strong>. The base module of python to define an abstract class is ABC (Abstract Base Classes). Each child or subclass of the abstract class should have defined the abstract methods of the abstract class.</p>
+<div class="highlight"><pre><span></span><code><span class="kr">from</span> <span class="nx">abc</span> <span class="k">import</span> <span class="nx">ABC</span><span class="p">,</span> <span class="nx">abstractmethod</span>
+
+<span class="kd">class</span> <span class="nx">Polygon</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">noofsides</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">Triangle</span><span class="p">(</span><span class="nx">Polygon</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">#</span> <span class="nx">overriding</span> <span class="kr">abstract</span> <span class="nx">method</span>
+    <span class="nx">def</span> <span class="nx">noofsides</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;I have 3 sides&quot;</span><span class="p">)</span>
+
+<span class="kd">class</span> <span class="nx">Quadrilateral</span><span class="p">(</span><span class="nx">Polygon</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">#</span> <span class="nx">overriding</span> <span class="kr">abstract</span> <span class="nx">method</span>
+    <span class="nx">def</span> <span class="nx">noofsides</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;I have 4 sides&quot;</span><span class="p">)</span>
+
+<span class="err">#</span> <span class="nx">Driver</span> <span class="nx">code</span>
+<span class="nx">R</span> <span class="o">=</span> <span class="nx">Triangle</span><span class="p">()</span>
+<span class="nx">R</span><span class="p">.</span><span class="nx">noofsides</span><span class="p">()</span>
+
+<span class="nx">K</span> <span class="o">=</span> <span class="nx">Quadrilateral</span><span class="p">()</span>
+<span class="nx">K</span><span class="p">.</span><span class="nx">noofsides</span><span class="p">()</span>
+</code></pre></div>
+
+<h2>The Liskov Substitution Principle</h2>
+<p>If you have objects in a program, you should be able to replace those objects with instances of their subtyoes or subclasses without changing the correctness of the program
+Add a initializer</p>
+<h3>Initializer example</h3>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">DebitPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing debit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<p>Not every pay method needs a security code, paypal paymethod needs an emailadress. Above we are abusing the abstractmethod pay, by setting an emailadress as security_code altough it is not. That is a violation of the Liskov principle.</p>
+<p>Adding an initializer and removing security_code as dependency from the pay method could solve this:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">DebitPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing debit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_adress</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_adress</span> <span class="o">=</span> <span class="nx">email_adress</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_adress}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<h2>The Interface Segregation Principle</h2>
+<p>Interface segragation principle states that overall, it is better to have several specific interfaces as opposed to one general purpose interface
+Abstract methods not always necessary. Subclasses</p>
+<p>Before:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">auth_sms</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">auth_sms</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Credit card payments don&#39;t support SMS code authorization.&quot;</span><span class="p">)</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_address</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_address</span> <span class="o">=</span> <span class="nx">email_address</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">auth_sms</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying SMS code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">not</span> <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Not authorized&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_address}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<p>You can see above an example where we have specify the abstract class to have auth_sms abstract method. However, if you pay with creditcard, you don't need this class. Making a sub abstractclass can help. This is also called Inheritance.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">PaymentProcessor_SMS</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">auth_sms</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor_SMS</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_address</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_address</span> <span class="o">=</span> <span class="nx">email_address</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">auth_sms</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying SMS code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">not</span> <span class="nx">self</span><span class="p">.</span><span class="nx">verified</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Not authorized&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_address}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<p>This can pontentially lead to a lot of inheritanced classes, so a different and sometimes better way to do this is by using Composition:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">SMSAuthorizer</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">verify_code</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying SMS code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span>
+
+
+<span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_address</span><span class="p">,</span> <span class="nx">authorizer</span><span class="o">:</span> <span class="nx">SMSAuthorizer</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_address</span> <span class="o">=</span> <span class="nx">email_address</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span> <span class="o">=</span> <span class="nx">authorizer</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">not</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span><span class="p">.</span><span class="nx">is_authorized</span><span class="p">()</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Not authorized&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_address}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="nx">authorizer</span> <span class="o">=</span> <span class="nx">SMSAuthorizer</span><span class="p">()</span>
+<span class="err">#</span> <span class="nx">authorizer</span><span class="p">.</span><span class="nx">verify_code</span><span class="p">(</span><span class="mf">465839</span><span class="p">)</span>
+<span class="nx">processor</span> <span class="o">=</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="s2">&quot;hi@arjancodes.com&quot;</span><span class="p">,</span> <span class="nx">authorizer</span><span class="p">)</span>
+<span class="nx">processor</span><span class="p">.</span><span class="nx">pay</span><span class="p">(</span><span class="nx">order</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>The Dependency inversion Principle</h2>
+<p>Classes should depent on abstract methods and not specified classes.</p>
+<p>In this example you can see that the payment methods are depending on a specific classtype 'SMSAuth'. So let's make that more depended on abstract classes and methods.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">SMSAuthorizer</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">verify_code</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying SMS code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span>
+
+
+<span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_address</span><span class="p">,</span> <span class="nx">authorizer</span><span class="o">:</span> <span class="nx">SMSAuthorizer</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_address</span> <span class="o">=</span> <span class="nx">email_address</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span> <span class="o">=</span> <span class="nx">authorizer</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">not</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span><span class="p">.</span><span class="nx">is_authorized</span><span class="p">()</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Not authorized&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_address}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nx">Authorizer</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+
+<span class="kd">class</span> <span class="nx">Authorizer_SMS</span><span class="p">(</span><span class="nx">Authorizer</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">verify_code</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying SMS code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span>
+
+<span class="kd">class</span> <span class="nx">Authorizer_Google</span><span class="p">(</span><span class="nx">Authorizer</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">verify_code</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying Google auth code {code}&quot;</span><span class="p">)</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span>
+
+<span class="kd">class</span> <span class="nx">Authorizer_Robot</span><span class="p">(</span><span class="nx">Authorizer</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">False</span>
+
+    <span class="nx">def</span> <span class="nx">not_a_robot</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span> <span class="o">=</span> <span class="nx">True</span>
+
+    <span class="nx">def</span> <span class="nx">is_authorized</span><span class="p">(</span><span class="nx">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">bool</span><span class="o">:</span>
+        <span class="k">return</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorized</span>
+
+
+<span class="kd">class</span> <span class="nx">PaymentProcessor</span><span class="p">(</span><span class="nx">ABC</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="err">@</span><span class="nx">abstractmethod</span>
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">pass</span>
+
+<span class="kd">class</span> <span class="nx">CreditPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">security_code</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">security_code</span> <span class="o">=</span> <span class="nx">security_code</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing credit payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Verifying security code: {self.security_code}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+
+<span class="kd">class</span> <span class="nx">PaypalPaymentProcessor</span><span class="p">(</span><span class="nx">PaymentProcessor</span><span class="p">)</span><span class="o">:</span>
+
+    <span class="nx">def</span> <span class="nx">__init__</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">email_address</span><span class="p">,</span> <span class="nx">authorizer</span><span class="o">:</span> <span class="nx">Authorizer</span><span class="p">)</span><span class="o">:</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">email_address</span> <span class="o">=</span> <span class="nx">email_address</span>
+        <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span> <span class="o">=</span> <span class="nx">authorizer</span>
+
+    <span class="nx">def</span> <span class="nx">pay</span><span class="p">(</span><span class="nx">self</span><span class="p">,</span> <span class="nx">order</span><span class="p">)</span><span class="o">:</span>
+        <span class="k">if</span> <span class="nx">not</span> <span class="nx">self</span><span class="p">.</span><span class="nx">authorizer</span><span class="p">.</span><span class="nx">is_authorized</span><span class="p">()</span><span class="o">:</span>
+            <span class="nx">raise</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">&quot;Not authorized&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Processing paypal payment type&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="nx">f</span><span class="s2">&quot;Using email address: {self.email_address}&quot;</span><span class="p">)</span>
+        <span class="nx">order</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="s2">&quot;paid&quot;</span>
+</code></pre></div>
+
+<h3>Reference:</h3>
+<ul>
+<li><em>ArjanCodes about SOLID principles: https://www.youtube.com/watch?v=pTB30aXS77U</em></li>
+<li><em>CodeExamples from: geeksforgeeks.org</em></li>
+</ul>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/solid-principles.html&amp;t=Mariska%20van%20Willigen%3A%20SOLID%20Principles" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/solid-principles.html&amp;text=Mariska%20van%20Willigen%3A%20SOLID%20Principles" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/solid-principles.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
