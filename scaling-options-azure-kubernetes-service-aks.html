@@ -110,13 +110,11 @@
         <section id="content">
           <h2>Scaling in AKS</h2>
 <p>Running an Azure Kubernetes Service (AKS) could lead to wanting increase or decrease the amount of your compute resources. If you change the instances, you might also want to change the underlying Kubernetes nodes.</p>
-<p>You have different scale options:</p>
-<ol>
-<li>Manually scaling</li>
-<li>Horizontal scaling</li>
-<li>Cluster autoscaler</li>
-<li>Azure Container Instance integration</li>
-</ol>
+<p>You have different scale options:
+1. Manually scaling
+2. Horizontal scaling
+3. Cluster autoscaler
+4. Azure Container Instance integration</p>
 <h2>Manually scaling</h2>
 <p>You can manually change the used replicas/pods and nodes to test the effect on your application. Here you can also define a fixed number of nodes to keep a fixed cost. To do this, you need to define the replica or node count. The Kubernetes API will then create these pods and nodes based on your count.</p>
 <h2>Understanding horizontal pod autoscalers</h2>
