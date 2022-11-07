@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>MLflow Introduction &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2021-04-22" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="MLflow Introduction"/>
+    <meta property="og:description" content="A short introduction to MLflow tracking"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/mlflow.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MLflow Introduction">
+    <meta name="twitter:description" content="A short introduction to MLflow tracking">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/mlflow.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>MLflow Introduction</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2021-04-22T10:20:00+02:00">do 22 april 2021</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/mlflow.html" title="All articles with Mlflow tag">#MLflow</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/tracking.html" title="All articles with Tracking tag">#tracking</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/introduction.html" title="All articles with Introduction tag">#introduction</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <h2>What is MLflow &amp; MLflow tracking?</h2>
+<p><a href="https://www.mlflow.org/">MLFlow</a> is the open-source solution for both the data scientist and the dev-ops engineer to track and register your models. You can divide MLFlow in MLFlow tracking part and a MLFlow modeling and model register part. This post will focuss on the MLFlow Tracking part and how it can be used. MLFlow tracking allows you to organize your data science artifacts into experiments and runs within your experiment.</p>
+<p><img alt="" src="/images/mlflow.png"></p>
+<p>With MLflow you can keep track of all kind of information, for example your parameters used in your model. Each run a new line/row will created in your experiment. You can store anything you want in a given run, and it does not need to match exactly to the last run.</p>
+<p>The following options you can use to record (log) information to MLFlow:</p>
+<blockquote>
+<p><strong>log_param</strong>: Allows you to log any model/pipeline parameters you’d like. Think train/test split, hyperparameters, stages of a transformation pipeline, a description of a specific source dataset.</p>
+<p><strong>log_params</strong>: MLManager specific function that takes a list of parameters to log and handles them all automatically</p>
+<p><strong>log_metric</strong>: Allows you to log any model metrics. Think train time, accuracy, precision, AUC etc.</p>
+<p><strong>log_metrics</strong>: MLManager specific function that takes a list of metrics and handles them all automatically</p>
+<p><strong>log_artifact</strong>: Allows you to log objects to a specific run. Think charts, serialized models, images etc.</p>
+<p><strong>log_artifacts</strong>: MLManager specific function that takes a list of artifacts and handles them all</p>
+<p><strong>log_feature_transformation</strong>: MLManager specific function that takes an <strong>untrained</strong> Spark Pipeline and logs all of the transformation steps of every feature in your dataset</p>
+<p><strong>log_pipeline_stages</strong>: MLManager specific function that takes a Spark Pipeline (fit or unfit) and logs all of the stages in a readable format</p>
+<p><strong>log_model_params</strong>: MLManager specific function that takes a fitted Spark model or Pipeline model and logs all of the parameters and hyperparameters</p>
+<p><strong>log_evaluator_metrics</strong>: MLManager specific function that takes a Splice Evaluator and logs all of its metrics</p>
+<p><strong>log_spark_model</strong>: MLManager specific function that takes a trained Spark model and logs it for deployment. This was created because, with Splice Machine’s implementation, the model is stored directly in the Splice Machine database instead of S3 or in external storage.</p>
+</blockquote>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/mlflow.html&amp;t=Mariska%20van%20Willigen%3A%20MLflow%20Introduction" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/mlflow.html&amp;text=Mariska%20van%20Willigen%3A%20MLflow%20Introduction" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/mlflow.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+
+
+  </body>
+</html>

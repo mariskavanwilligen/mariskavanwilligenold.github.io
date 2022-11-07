@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>MLflow Tracking Introduction &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="MLflow Tracking Introduction"/>
+    <meta property="og:description" content=""/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/pages/mlflow-tracking-introduction.html"/>
+    <meta property="og:image" content="/images/logo_min.png"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MLflow Tracking Introduction">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/pages/mlflow-tracking-introduction.html">
+    <meta name="twitter:image" content="/images/logo_min.png">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li class="active" ><a href="https://mariskavanwilligen.github.io/pages/mlflow-tracking-introduction.html">MLflow Tracking Introduction</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>MLflow Tracking Introduction</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <p>Date: 2021-04-22 10:20</p>
+<p>Tags: </p>
+<p>Slug: mlflow</p>
+<p>Authors: Mariska van Willigen</p>
+<p>Summary: MLflow</p>
+<h2>What is MLflow &amp; MLflow tracking?</h2>
+<p><a href="https://www.mlflow.org/">MLFlow</a> is the open-source solution for both the data scientist and the dev-ops engineer to track and register your models. You can divide MLFlow in MLFlow tracking part and a MLFlow modeling and model register part. This post will focuss on the MLFlow Tracking part and how it can be used. MLFlow tracking allows you to organize your data science artifacts into experiments and runs within your experiment.</p>
+<p>With MLflow you can keep track of all kind of information, for example your parameters used in your model. Each run a new line/row will created in your experiment. You can store anything you want in a given run, and it does not need to match exactly to the last run.</p>
+<p>The following options you can use to record (log) information to MLFlow:</p>
+<blockquote>
+<p><strong>log_param</strong>: Allows you to log any model/pipeline parameters you’d like. Think train/test split, hyperparameters, stages of a transformation pipeline, a description of a specific source dataset.</p>
+<p><strong>log_params</strong>: MLManager specific function that takes a list of parameters to log and handles them all automatically</p>
+<p><strong>log_metric</strong>: Allows you to log any model metrics. Think train time, accuracy, precision, AUC etc.</p>
+<p><strong>log_metrics</strong>: MLManager specific function that takes a list of metrics and handles them all automatically</p>
+<p><strong>log_artifact</strong>: Allows you to log objects to a specific run. Think charts, serialized models, images etc.</p>
+<p><strong>log_artifacts</strong>: MLManager specific function that takes a list of artifacts and handles them all</p>
+<p><strong>log_feature_transformation</strong>: MLManager specific function that takes an <strong>untrained</strong> Spark Pipeline and logs all of the transformation steps of every feature in your dataset</p>
+<p><strong>log_pipeline_stages</strong>: MLManager specific function that takes a Spark Pipeline (fit or unfit) and logs all of the stages in a readable format</p>
+<p><strong>log_model_params</strong>: MLManager specific function that takes a fitted Spark model or Pipeline model and logs all of the parameters and hyperparameters</p>
+<p><strong>log_evaluator_metrics</strong>: MLManager specific function that takes a Splice Evaluator and logs all of its metrics</p>
+<p><strong>log_spark_model</strong>: MLManager specific function that takes a trained Spark model and logs it for deployment. This was created because, with Splice Machine’s implementation, the model is stored directly in the Splice Machine database instead of S3 or in external storage.</p>
+</blockquote>
+<h2>Why should you use it?</h2>
+<h2>How to use it?</h2>
+<h2>Small example</h2>
+<p>autologging feature</p>
+<ul>
+<li>
+<p>it logs the model</p>
+</li>
+<li>
+<p>logs some metrics</p>
+</li>
+<li>
+<p>Initialize handler instance</p>
+</li>
+</ul>
+<p>'models' left down in dateabricks</p>
+<p>'experiments' top right in notebook</p>
+<h1>MLFlow Model</h1>
+<h2>Save results</h2>
+<p>1 experiment wher you can save all the runs. best one -&gt; centralized registry workspace</p>
+<p>promote to test -&gt; </p>
+<p>crw keeps track of all the models (best hyperparameters)</p>
+<p>You then have to train, save and register only once, and then the model can be tested and be deployed in different workspaces (test, production)</p>
+<h2>Save/register a model with MLFlow</h2>
+<h2>Use/read a model from MLFlow</h2>
+<h2>REST API</h2>
+<p>serving: read it in to pandas df, read it out (with cluster create permission) package in dockercontainer on new cluster, fully provised needed by the model. Allows to quicly deploy the model to get approach for REST API (20 queries per second). Azuer ML / AKS still necessarry for prosuction ready API.</p>
+<p>Don't forget to stop the cluster! It will keep on running.</p>
+<h2>Webhooks</h2>
+<p>webhook for a job, or morre generic webhooks</p>
+<p>mlflow_webhooks</p>
+<p>again don't leave the cluster up and running</p>
+<script src="assets/js/jquery.min.js"></script>
+<script type="text/javascript">var submitted=false;</script>
+<script type="text/javascript">
+$('#gform').on('submit', function(e) {
+  $('#gform *').fadeOut(50);
+  $('#gform').prepend('Thank You! Your submission has been processed.');
+  });
+</script>
+        </section>
+        
+
+        <br><br><br>
+        
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+
+
+  </body>
+</html>

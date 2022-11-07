@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0C50D9NRQT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-0C50D9NRQT');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Scaling Options Azure Kubernetes Service (AKS) &ndash; Mariska van Willigen</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Mariska van Willigen &ndash; ">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Social -->
+    <meta property="article:author" content="Mariska van Willigen" />
+    <meta property="article:section" content="Posts" />
+    <meta property="article:published_time" content="2022-04-05" />
+
+    <meta property="og:type" content="article"/>
+    <meta property="og:title" content="Scaling Options Azure Kubernetes Service (AKS)"/>
+    <meta property="og:description" content="Overview of the different scaling options in Azure Kubernetes Service"/>
+    <meta property="og:site_name" content="Mariska van Willigen" />
+    <meta property="og:url" content="https://mariskavanwilligen.github.io/scaling-options-azure-kubernetes-service-aks.html"/>
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Scaling Options Azure Kubernetes Service (AKS)">
+    <meta name="twitter:description" content="Overview of the different scaling options in Azure Kubernetes Service">
+    <meta name="twitter:url" content="https://mariskavanwilligen.github.io/scaling-options-azure-kubernetes-service-aks.html">
+
+    <!-- Feed -->
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:regular,bold">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/w3.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/jqcloud.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://mariskavanwilligen.github.io/theme/css/pygments-highlight-github.css">
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="https://mariskavanwilligen.github.io/images/favicon.ico" />
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="https://mariskavanwilligen.github.io/"> -->
+    
+    
+
+    <!-- JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://mariskavanwilligen.github.io/theme/js/jqcloud.min.js"></script>
+  </head>
+
+  <body>
+    <div class="w3-row w3-card w3-white">
+      <header id="header">
+        <a href="https://mariskavanwilligen.github.io" id="header-logo" title="Home">MvW</a>
+        <nav id="header-menu">
+          <ul>
+            <li><a href="https://mariskavanwilligen.github.io/pages/about-me.html">About me</a></li>
+            <li><a href="https://mariskavanwilligen.github.io/pages/contact-page.html">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+
+
+
+    <br><br><br>
+
+    <article>
+      <header class="w3-container col-main">
+        <h1>Scaling Options Azure Kubernetes Service (AKS)</h1>
+        <div class="post-info">
+          <div class="w3-opacity w3-margin-right w3-margin-bottom" style="flex-grow: 1;">
+            <span><time datetime="2022-04-05T10:43:00+02:00">Tue 05 April 2022</time> in <a href="https://mariskavanwilligen.github.io/category/posts.html" title="All articles in category Posts">Posts</a></span>
+          </div>
+          <div>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/azure.html" title="All articles with Azure tag">#Azure</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/kubernetes.html" title="All articles with Kubernetes tag">#Kubernetes</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/scaling.html" title="All articles with Scaling tag">#Scaling</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/pods.html" title="All articles with Pods tag">#Pods</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/aks.html" title="All articles with Aks tag">#AKS</a>
+            </span>
+            <span class="w3-tag w3-light-grey w3-text-purple w3-hover-purple">
+              <a href="https://mariskavanwilligen.github.io/tag/instances.html" title="All articles with Instances tag">#Instances</a>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <br>
+
+
+      <div class="col-main w3-container">
+        <section id="content">
+          <h2>Scaling in AKS</h2>
+<p>Running an Azure Kubernetes Service (AKS) could lead to wanting increase or decrease the amount of your compute resources. If you change the instances, you might also want to change the underlying Kubernetes nodes.</p>
+<p>You have different scale options:</p>
+<ol>
+<li>Manually scaling</li>
+<li>Horizontal scaling</li>
+<li>Cluster autoscaler</li>
+<li>Azure Container Instance integration</li>
+</ol>
+<h2>Manually scaling</h2>
+<p>You can manually change the used replicas/pods and nodes to test the effect on your application. Here you can also define a fixed number of nodes to keep a fixed cost. To do this, you need to define the replica or node count. The Kubernetes API will then create these pods and nodes based on your count.</p>
+<h2>Understanding horizontal pod autoscalers</h2>
+<p>Horizontal scaling checksby default every 60 seconds the demand on the app. If changes in the number of instances are required, Kubernetes will increase the replicas/instances. 
+When the requirements are decreasing, the number of pods will also decrease.</p>
+<p>You do have to define a min and a max number of replicas that can run and a metric such as CPU usage that needs to be checked every 60 seconds to determine the increase or decrease of the replicas.</p>
+<p><img alt="" src="/images/horizontal-pod-autoscaling.png"></p>
+<p>You can also set a delay value. This value is defines how long the horizontal pod autoscaler must wait after it has scaled up or down the number of replicas. This makes sure that earlier scaling is taken into account during the metric check. 
+This delay value on scale down event is by default set to 5 minutes. Currently, you can't tune these cooldown values from the default.</p>
+<h2>Example</h2>
+<p>You can set the min replicas and the maximum replicas you would ike. If the average CPU utilization across all pods exceeds 55% of their requested usages, the autoscaler increases the pods up to a maximum of 10 instances.
+If there is a minimum load for a few minutes on the app, the number of pods will decrease automatically to the min of 3. </p>
+<p>Below you can find the manifest file yaml with the defined autoscaler and resource limits:</p>
+<div class="highlight"><pre><span></span><code>apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: <span class="o">{{</span> environ<span class="o">(</span><span class="s1">&#39;APP_NAME&#39;</span><span class="o">)</span> <span class="o">}}</span>
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: <span class="o">{{</span> environ<span class="o">(</span><span class="s1">&#39;APP_NAME&#39;</span><span class="o">)</span> <span class="o">}}</span>
+  minReplicas: <span class="m">3</span>
+  maxReplicas: <span class="m">10</span>
+  targetCPUUtilizationPercentage: <span class="m">55</span>
+</code></pre></div>
+
+<p>Then run the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">kubectl</span> <span class="nx">apply</span> <span class="o">-</span><span class="nx">f</span> <span class="nx">filename</span><span class="p">.</span><span class="nx">yaml</span>
+</code></pre></div>
+
+<p>You can also do this by running a kubectl command:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">kubectl</span> <span class="nx">autoscale</span> <span class="nx">deployment</span> <span class="p">{{</span> <span class="nx">environ</span><span class="p">(</span><span class="s1">&#39;APP_NAME&#39;</span><span class="p">)</span> <span class="p">}}</span> <span class="o">--</span><span class="nx">cpu</span><span class="o">-</span><span class="nx">percent</span><span class="o">=</span><span class="mf">50</span> <span class="o">--</span><span class="nx">min</span><span class="o">=</span><span class="mf">3</span> <span class="o">--</span><span class="nx">max</span><span class="o">=</span><span class="mf">10</span>
+</code></pre></div>
+
+<h2>Cluster Autoscaler</h2>
+<p>The horizontal pod autoscaler can increase or decrease the number of replicas/instances/pods. However, the cluster autoscaler can adjust the number of nodes based on the requested compute resources in the node pool. By default the cluster autoscaler checks the Metrics API server every 10 seconds. If a change is necessary the number of nodes in your AKS cluster is increased or decreased. </p>
+<p><img alt="" src="/images/cluster-autoscaler.png"></p>
+<p>When the cluster autoscaler sees that no new request can't be handeled because of node pool resource constraints, the number of nodes within the node pool will be increased to provide the additional compute resources. When those additional nodes are successfully deployed and available for use within the node pool, the pods are then scheduled to run on them.</p>
+<p>The cluster autoscaler also monitors the pod status for nodes that haven't handeled any new requests. This indicates that the node pool has more compute resources than are necessary, so the number of nodes can be decreased.</p>
+<h2>Azure Container Instances</h2>
+<p>If you need a very quick response and quickly deplot container instances without additional infrastructure overhad you can use Azure Container Instances. </p>
+<p><img alt="" src="/images/burst-scaling.png"></p>
+        </section>
+
+        <br><br><br>
+
+        <footer>
+          <div class="adjust-width">
+            <div id="author-block" class="w3-pink w3-border">
+              <div id="author-info">
+                <a href=""><img style="width: 60px; height: 60px;" src="/images/logo_min.png" onerror="this.src='images/avatar.png'" alt="Avatar"></a>
+                <div style="margin-left: 20px; margin-top: 15px;">
+                  <a href=""><span id="author-name" class="w3-hover-text-dark-grey">Mariska van Willigen</span></a>
+                  <p id="author-story">Hello world! I’m Mariska van Willigen. Data scientist for Albert Heijn!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br><br><br>
+
+          <p style="font-size:10pt; font-style: italic;">Did you like this article? Share it with your friends!</p>
+          <div id="share" class="share">
+            <a href="http://www.facebook.com/sharer.php?u=https%3A//mariskavanwilligen.github.io/scaling-options-azure-kubernetes-service-aks.html&amp;t=Mariska%20van%20Willigen%3A%20Scaling%20Options%20Azure%20Kubernetes%20Service%20%28AKS%29" target="_blank" class="w3-btn w3-indigo">
+              <i class="fa fa-facebook"></i> <span>Facebook</span>
+            </a>
+            <a href="http://twitter.com/share?url=https%3A//mariskavanwilligen.github.io/scaling-options-azure-kubernetes-service-aks.html&amp;text=Mariska%20van%20Willigen%3A%20Scaling%20Options%20Azure%20Kubernetes%20Service%20%28AKS%29" target="_blank" class="w3-btn w3-blue">
+              <i class="fa fa-twitter"></i> <span>Twitter</span>
+            </a>
+            <a href="https://plus.google.com/share?url=https%3A//mariskavanwilligen.github.io/scaling-options-azure-kubernetes-service-aks.html" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');return false;" class="w3-btn w3-red">
+              <i class="fa fa-google-plus"></i> <span>Google</span>
+            </a>
+          </div>
+
+          <br><br><br>
+
+
+
+        </footer>
+      </div>
+    </article>
+
+
+    <footer id="footer">
+      <div id="footer-copyright" class="w3-center w3-small w3-text-grey w3-padding-48">
+        <span>&copy;  Mariska van Willigen </span>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'G-0C50D9NRQT', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+  </body>
+</html>
